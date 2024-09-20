@@ -94,7 +94,6 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
                 },
             });
 
-            console.log(response.updateBell);
             return response.updateBell;
         } catch (err) {
             console.error(err);
