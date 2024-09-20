@@ -1,80 +1,41 @@
 <template>
     <div>
-        <button @click="subscribe">Subscribe to Updates</button>
-        <button @click="createEntry">Create Entry</button>
-        <div v-if="loading">Loading...</div>
+        <h1>Sensors Data</h1>
+        <button @click="initializeStore">Initialize Store</button>
+        <div v-if="loading">Loading sensors...</div>
         <div v-if="error">{{ error }}</div>
-        <ul>
-            <li v-for="item in data" :key="item.id">{{ item.address }} - {{ item.sensor }}: {{ item.value }}</li>
+
+        <ul v-if="sensors && sensors.length">
+            <li v-for="sensor in sensors" :key="sensor._id">
+                {{ sensor.name }} - Status: {{ sensor.status ? 'Active' : 'Inactive' }}
+            </li>
         </ul>
+
+        <div v-if="bell">
+            <h2>Bell Status</h2>
+            Status: {{ bell.status ? 'On' : 'Off' }}
+            <button @click="toggleBell">Toggle Bell</button>
+        </div>
     </div>
 </template>
 
 <script>
-import { ref } from 'vue';
-import { GraphQLClient } from 'graphql-request';
-import { createClient } from 'graphql-ws';
-
-export const wsClient = createClient({
-    url: 'ws://localhost:3000/subscriptions',
-});
-
-const endpoint = 'http://localhost:3000/graphql';
-const graphqlClient = new GraphQLClient(endpoint);
+import { ref, onMounted, computed } from 'vue';
+import { useSensorsDataStore } from '../store';
 
 export default {
     setup() {
+        const store = useSensorsDataStore();
         const loading = ref(false);
         const error = ref(null);
-        const data = ref([]);
 
-        const subscribe = () => {
-            const query = `
-        subscription {
-          entryCreated {
-            address
-            sensor
-            value
-          }
-        }
-      `;
+        const sensors = computed(() => store.sensors);
+        const bell = computed(() => store.bell);
 
-            wsClient.subscribe(
-                { query },
-                {
-                    next: (response) => {
-                        data.value.push(response.data.entryCreated);
-                    },
-                    error: (err) => {
-                        error.value = err.message;
-                    },
-                }
-            );
-        };
-
-        const createEntry = async () => {
-            const mutation = `
-        mutation CreateEntry($entryInput: EntryCreate!) {
-          createEntry(entryInput: $entryInput) {
-            address
-            sensor
-            value
-          }
-        }
-      `;
-
-            const variables = {
-                entryInput: {
-                    address: 'liakos',
-                    sensor: 1,
-                    value: 22,
-                },
-            };
-
+        const initializeStore = async () => {
+            loading.value = true;
             try {
-                loading.value = true;
-                error.value = null;
-                await graphqlClient.request(mutation, variables);
+                await store.initStore();
             } catch (err) {
                 error.value = err.message;
             } finally {
@@ -82,12 +43,39 @@ export default {
             }
         };
 
+        const toggleBell = async () => {
+            if (!bell.value) {
+                console.error("Bell is not initialized");
+                return;
+            }
+
+            const previousStatus = bell.value.status;
+            bell.value.status = !bell.value.status;
+
+            const updatedBell = {
+                _id: bell.value._id,
+                status: !previousStatus,
+            };
+
+            try {
+                await store.updateBell(updatedBell);
+            } catch (err) {
+                console.error("Failed to update bell, reverting to previous status", err);
+                bell.value.status = previousStatus;
+            }
+        };
+
+        onMounted(async () => {
+            await initializeStore();
+        });
+
         return {
             loading,
             error,
-            data,
-            subscribe,
-            createEntry,
+            sensors,
+            bell,
+            initializeStore,
+            toggleBell,
         };
     },
 };

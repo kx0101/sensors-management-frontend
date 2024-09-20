@@ -2,11 +2,12 @@
   "name": "kex_sensors_ui",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "genql": "genql --endpoint http://localhost:3000/graphql --output ./generated",
+    "dev": "rm -rf generated && pnpm run genql && pnpm run start"
   },
   "dependencies": {
     "@primevue/themes": "^4.0.7",
@@ -20,6 +21,7 @@
     "vue": "^3.4.37"
   },
   "devDependencies": {
+    "@genql/cli": "^6.3.3",
     "@vitejs/plugin-vue": "^5.1.2",
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
