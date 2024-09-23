@@ -49,14 +49,34 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
             const response = await gqlClient.mutation({
                 updateSensor: {
                     __args: {
-                        sensorInput: data,
-                    }
+                        sensorInput: {
+                            _id: data._id,
+                            name: data.name,
+                            description: data.description,
+                            address: data.address,
+                            location: data.location,
+                            type: data.type,
+                            sensor_id: data.sensor_id,
+                            unit: data.unit,
+                            status: data.status,
+                            building: data.building,
+                            up_limit: data.up_limit,
+                            down_limit: data.down_limit,
+                        },
+                    },
+                    ...everything,
                 },
             });
 
-            console.log(response);
+            return {
+                success: true,
+                data: response.updateSensor,
+            }
         } catch (err) {
-            console.error(err);
+            return {
+                success: false,
+                error: err,
+            }
         }
     }
 
@@ -66,7 +86,8 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
                 deleteSensor: {
                     __args: {
                         _id: id
-                    }
+                    },
+                    ...everything,
                 },
             });
 
@@ -120,6 +141,35 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         }
     }
 
+    async function createSensor(data: ISensor) {
+        try {
+            const response = await gqlClient.mutation({
+                createSensor: {
+                    __args: {
+                        sensorInput: {
+                            name: data.name,
+                            description: data.description,
+                            address: data.address,
+                            location: data.location,
+                            type: data.type,
+                            sensor_id: data.sensor_id,
+                            unit: data.unit,
+                            status: data.status,
+                            building: data.building,
+                            up_limit: data.up_limit,
+                            down_limit: data.down_limit,
+                        },
+                    },
+                    ...everything
+                },
+            });
+
+            console.log(response);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     return {
         sensors,
         bell,
@@ -136,6 +186,7 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         updateBell,
         setVisible,
         updateAlarm,
+        createSensor,
     };
 },
 )

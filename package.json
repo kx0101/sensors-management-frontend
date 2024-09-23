@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@primevue/themes": "^4.0.7",
+    "@vueuse/core": "^11.1.0",
     "graphql": "^16.9.0",
     "graphql-request": "^7.1.0",
     "graphql-ws": "^5.16.0",
@@ -18,7 +19,8 @@
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
     "primevue": "^4.0.7",
-    "vue": "^3.4.37"
+    "vue": "^3.4.37",
+    "vue-router": "4"
   },
   "devDependencies": {
     "@genql/cli": "^6.3.3",
