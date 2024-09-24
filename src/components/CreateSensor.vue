@@ -70,7 +70,6 @@
 import { ref } from 'vue';
 import { useSensorsDataStore } from '../../store';
 import type { GraphQLError } from 'graphql';
-import SensorForm from './SensorForm.vue'
 
 const visibleCard = ref(false);
 const store = useSensorsDataStore();
