@@ -7,7 +7,7 @@
             </span>
         </template>
         <template #end>
-            <Button @click="handleLogout" label="Εξοδος" icon="pi pi-sign-out" class="logout-button" />
+            <Button @click="handleLogout" label="Εξοδος" icon="pi pi-sign-out" class="logout-button" severity="danger" />
         </template>
     </Menubar>
 </template>
@@ -75,8 +75,6 @@ const menuModel = ref([
 }
 
 .logout-button {
-    background-color: red;
-    color: white;
     border: none;
     border-radius: 5px;
     padding: 0.5rem 1rem;
