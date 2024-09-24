@@ -1,5 +1,4 @@
 <template>
-    <NavBar />
     <div class="flex flex-row flex-wrap gap-4 mt-4">
         <div v-for="sensor in sensors" :key="sensor._id">
             <SensorConfig :sensor="sensor" class="flex align-items-left justify-content-center" />
@@ -9,13 +8,12 @@
 </template>
 
 <script setup lang="ts">
-import NavBar from '../components/NavBar.vue';
 import SensorConfig from '../components/SensorConfig.vue';
 import CreateSensor from '../components/CreateSensor.vue';
 import { computed, onMounted, ref } from 'vue';
 import { useSensorsDataStore } from '../../store';
 import { useAuthStore } from '../../usersStore';
-import { router } from '../Approutes'
+import { router } from '../AppRoutes';
 
 const store = useSensorsDataStore();
 const auth = useAuthStore();

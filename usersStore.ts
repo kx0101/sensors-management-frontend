@@ -30,8 +30,6 @@ export const useAuthStore = defineStore('auth', () => {
                 error.value = null;
 
                 Cookies.set('authToken', data.token, { sameSite: 'None', secure: true, expires: 1 });
-
-                router.push('/');
             } else {
                 error.value = data.message || 'Login failed';
                 return { error: error.value }

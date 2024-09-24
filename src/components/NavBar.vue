@@ -33,33 +33,28 @@ const handleLogout = async () => {
 const menuModel = ref([
     {
         label: 'Ενδείξεις',
-        icon: 'material-icons',
+        icon: 'pi pi-wifi',
         command: () => navigate('/'),
     },
     {
         label: 'Ρυθμίσεις',
-        icon: 'material-icons',
+        icon: 'pi pi-cog',
         items: [
             {
                 label: 'Αισθητήρες',
-                icon: 'material-icons',
+                icon: 'pi pi-sensor',
                 command: () => navigate('/sensors'),
             },
-            {
-                label: 'Βάση Δεδομένων',
-                icon: 'material-icons',
-                command: () => navigate('/database'),
-            }
         ]
     },
     {
         label: 'Στατιστικά',
-        icon: 'material-icons',
+        icon: 'pi pi-chart-line',
         command: () => navigate('/sensorstats'),
     },
     {
         label: 'Συναγερμοί',
-        icon: 'material-icons',
+        icon: 'pi pi-bell',
         command: () => navigate('/alarms'),
     },
 ]);

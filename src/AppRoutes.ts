@@ -4,7 +4,7 @@ import Sensors from './pages/Sensors.vue'
 import Login from './pages/Login.vue'
 
 const routes = [
-    { path: '/', component: Sensors },
+    { path: '/sensors', component: Sensors },
     { path: '/login', component: Login },
 ]
 
