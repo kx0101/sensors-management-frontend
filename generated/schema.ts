@@ -5,8 +5,8 @@
 
 export type Scalars = {
     String: string,
-    ID: string,
     Int: number,
+    ID: string,
     Boolean: boolean,
     Float: number,
     Date: any,
@@ -81,10 +81,14 @@ export type Scalars = {
 export interface Query {
     alarms: ((Alarm | null)[] | null)
     alarm: ((Alarm | null)[] | null)
+    getAlarmByAddressAndId: (Alarm | null)
     bell: (Bell | null)
     entries: ((Entry | null)[] | null)
     sensors: ((Sensor | null)[] | null)
     sensor: (Sensor | null)
+    getSensorByAddressAndId: (Sensor | null)
+    getSensorsByBuilding: ((Sensor | null)[] | null)
+    getSensorUniqueBuildings: ((Scalars['String'] | null)[] | null)
     users: ((User | null)[] | null)
     user: (User | null)
     userByUsername: (User | null)
@@ -101,6 +105,7 @@ export interface Mutation {
     createSensor: (Sensor | null)
     updateSensor: (Sensor | null)
     deleteSensor: (Sensor | null)
+    updateStatusSensor: (Sensor | null)
     __typename: 'Mutation'
 }
 
@@ -164,10 +169,14 @@ export interface User {
 export interface QueryGenqlSelection{
     alarms?: AlarmGenqlSelection
     alarm?: (AlarmGenqlSelection & { __args: {sensor: SensorInput} })
+    getAlarmByAddressAndId?: (AlarmGenqlSelection & { __args: {address: Scalars['String'], sensor: Scalars['Int']} })
     bell?: BellGenqlSelection
     entries?: (EntryGenqlSelection & { __args: {sensor: EntryID} })
     sensors?: SensorGenqlSelection
     sensor?: (SensorGenqlSelection & { __args: {location: Scalars['String']} })
+    getSensorByAddressAndId?: (SensorGenqlSelection & { __args: {address: Scalars['String'], sensor_id: Scalars['Int']} })
+    getSensorsByBuilding?: (SensorGenqlSelection & { __args: {building: Scalars['String']} })
+    getSensorUniqueBuildings?: boolean | number
     users?: UserGenqlSelection
     user?: (UserGenqlSelection & { __args: {user: UserInput} })
     userByUsername?: (UserGenqlSelection & { __args: {username: Scalars['String']} })
@@ -185,6 +194,7 @@ export interface MutationGenqlSelection{
     createSensor?: (SensorGenqlSelection & { __args: {sensorInput: SensorCreate} })
     updateSensor?: (SensorGenqlSelection & { __args: {sensorInput: SensorUpdate} })
     deleteSensor?: (SensorGenqlSelection & { __args: {_id: Scalars['ID']} })
+    updateStatusSensor?: (SensorGenqlSelection & { __args: {_id: Scalars['ID'], status: Scalars['Boolean']} })
     __typename?: boolean | number
     __scalar?: boolean | number
 }

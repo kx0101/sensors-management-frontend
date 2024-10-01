@@ -1,10 +1,14 @@
 type Query {
   alarms: [Alarm]
   alarm(sensor: SensorInput!): [Alarm]
+  getAlarmByAddressAndId(address: String!, sensor: Int!): Alarm
   bell: Bell
   entries(sensor: EntryID!): [Entry]
   sensors: [Sensor]
   sensor(location: String!): Sensor
+  getSensorByAddressAndId(address: String!, sensor_id: Int!): Sensor
+  getSensorsByBuilding(building: String!): [Sensor]
+  getSensorUniqueBuildings: [String]
   users: [User]
   user(user: UserInput!): User
   userByUsername(username: String!): User
@@ -20,6 +24,7 @@ type Mutation {
   createSensor(sensorInput: SensorCreate!): Sensor
   updateSensor(sensorInput: SensorUpdate!): Sensor
   deleteSensor(_id: ID!): Sensor
+  updateStatusSensor(_id: ID!, status: Boolean!): Sensor
 }
 
 type Alarm {

@@ -22,6 +22,9 @@ import NavBar from './components/NavBar.vue';
 import Password from 'primevue/password';
 import Image from 'primevue/image';
 import { definePreset } from '@primevue/themes';
+import Knob from 'primevue/knob';
+import ProgressSpinner from 'primevue/progressspinner';
+import 'material-icons/iconfont/material-icons.css';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -66,5 +69,7 @@ app.component('Login', Login);
 app.component('Sensors', Sensors);
 app.component('NavBar', NavBar);
 app.component('Image', Image);
+app.component('Knob', Knob);
+app.component('ProgressSpinner', ProgressSpinner);
 
 app.mount('#app');

@@ -1,9 +1,9 @@
 export default {
     "scalars": [
         1,
-        3,
+        2,
+        4,
         5,
-        6,
         15,
         23,
         24,
@@ -76,14 +76,27 @@ export default {
     "types": {
         "Query": {
             "alarms": [
-                4
+                6
             ],
             "alarm": [
-                4,
+                6,
                 {
                     "sensor": [
                         7,
                         "SensorInput!"
+                    ]
+                }
+            ],
+            "getAlarmByAddressAndId": [
+                6,
+                {
+                    "address": [
+                        1,
+                        "String!"
+                    ],
+                    "sensor": [
+                        2,
+                        "Int!"
                     ]
                 }
             ],
@@ -111,6 +124,31 @@ export default {
                     ]
                 }
             ],
+            "getSensorByAddressAndId": [
+                18,
+                {
+                    "address": [
+                        1,
+                        "String!"
+                    ],
+                    "sensor_id": [
+                        2,
+                        "Int!"
+                    ]
+                }
+            ],
+            "getSensorsByBuilding": [
+                18,
+                {
+                    "building": [
+                        1,
+                        "String!"
+                    ]
+                }
+            ],
+            "getSensorUniqueBuildings": [
+                1
+            ],
             "users": [
                 21
             ],
@@ -137,9 +175,10 @@ export default {
             ]
         },
         "String": {},
+        "Int": {},
         "Mutation": {
             "createAlarm": [
-                4,
+                6,
                 {
                     "alarmInput": [
                         8,
@@ -148,7 +187,7 @@ export default {
                 }
             ],
             "updateAlarm": [
-                4,
+                6,
                 {
                     "alarmInput": [
                         9,
@@ -214,8 +253,21 @@ export default {
                 18,
                 {
                     "_id": [
-                        3,
+                        4,
                         "ID!"
+                    ]
+                }
+            ],
+            "updateStatusSensor": [
+                18,
+                {
+                    "_id": [
+                        4,
+                        "ID!"
+                    ],
+                    "status": [
+                        5,
+                        "Boolean!"
                     ]
                 }
             ],
@@ -224,21 +276,22 @@ export default {
             ]
         },
         "ID": {},
+        "Boolean": {},
         "Alarm": {
             "_id": [
-                3
+                4
             ],
             "address": [
                 1
             ],
             "sensor": [
-                5
+                2
             ],
             "reason": [
                 1
             ],
             "aknowledged": [
-                6
+                5
             ],
             "createdAt": [
                 25
@@ -250,14 +303,12 @@ export default {
                 1
             ]
         },
-        "Int": {},
-        "Boolean": {},
         "SensorInput": {
             "address": [
                 1
             ],
             "id": [
-                5
+                2
             ],
             "__typename": [
                 1
@@ -268,7 +319,7 @@ export default {
                 1
             ],
             "sensor": [
-                5
+                2
             ],
             "reason": [
                 1
@@ -279,10 +330,10 @@ export default {
         },
         "AlarmUpdate": {
             "_id": [
-                3
+                4
             ],
             "aknowledged": [
-                6
+                5
             ],
             "__typename": [
                 1
@@ -290,7 +341,7 @@ export default {
         },
         "SensorID": {
             "sensor": [
-                3
+                4
             ],
             "__typename": [
                 1
@@ -298,7 +349,7 @@ export default {
         },
         "Subscription": {
             "alarmCreated": [
-                4
+                6
             ],
             "entryCreated": [
                 14
@@ -309,10 +360,10 @@ export default {
         },
         "Bell": {
             "_id": [
-                3
+                4
             ],
             "status": [
-                6
+                5
             ],
             "__typename": [
                 1
@@ -320,10 +371,10 @@ export default {
         },
         "BellUpdate": {
             "_id": [
-                3
+                4
             ],
             "status": [
-                6
+                5
             ],
             "__typename": [
                 1
@@ -331,13 +382,13 @@ export default {
         },
         "Entry": {
             "_id": [
-                3
+                4
             ],
             "address": [
                 1
             ],
             "sensor": [
-                5
+                2
             ],
             "value": [
                 15
@@ -361,10 +412,10 @@ export default {
                 1
             ],
             "sensor": [
-                5
+                2
             ],
             "period": [
-                5
+                2
             ],
             "__typename": [
                 1
@@ -375,7 +426,7 @@ export default {
                 1
             ],
             "sensor": [
-                5
+                2
             ],
             "value": [
                 15
@@ -386,7 +437,7 @@ export default {
         },
         "Sensor": {
             "_id": [
-                3
+                4
             ],
             "name": [
                 1
@@ -404,13 +455,13 @@ export default {
                 1
             ],
             "sensor_id": [
-                5
+                2
             ],
             "unit": [
                 1
             ],
             "status": [
-                6
+                5
             ],
             "building": [
                 1
@@ -442,13 +493,13 @@ export default {
                 1
             ],
             "sensor_id": [
-                5
+                2
             ],
             "unit": [
                 1
             ],
             "status": [
-                6
+                5
             ],
             "building": [
                 1
@@ -465,7 +516,7 @@ export default {
         },
         "SensorUpdate": {
             "_id": [
-                3
+                4
             ],
             "name": [
                 1
@@ -483,13 +534,13 @@ export default {
                 1
             ],
             "sensor_id": [
-                5
+                2
             ],
             "unit": [
                 1
             ],
             "status": [
-                6
+                5
             ],
             "building": [
                 1

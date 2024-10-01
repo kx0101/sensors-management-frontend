@@ -29,7 +29,7 @@ export const useAuthStore = defineStore('auth', () => {
                 isLoggedIn.value = true;
                 error.value = null;
 
-                Cookies.set('authToken', data.token, { sameSite: 'None', secure: true, expires: 1 });
+                Cookies.set('authToken', data.token, { sameSite: 'None', secure: true });
             } else {
                 error.value = data.message || 'Login failed';
                 return { error: error.value }
@@ -46,6 +46,7 @@ export const useAuthStore = defineStore('auth', () => {
         username.value = null;
         role.value = null;
         isLoggedIn.value = false;
+
         Cookies.remove('authToken');
 
         router.push('/login');

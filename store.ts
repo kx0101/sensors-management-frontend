@@ -16,11 +16,13 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
     });
     const alarms = ref<IAlarm[]>([]);
     const visible = ref(false);
+    const uniqueBuildings = ref<string[]>([]);
 
     const getSensor = computed(() => (id: string) => sensors.value.find((sensor) => sensor._id === id));
     const getSensors = computed(() => sensors.value);
     const getBell = computed(() => bell.value);
     const getAlarm = computed(() => alarms.value);
+    const getUniqueBuildings = computed(() => uniqueBuildings.value);
 
     async function initStore() {
         try {
@@ -41,6 +43,35 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
             bell.value = bellData.bell || { _id: '', status: false } as IBell;
         } catch (err) {
             console.error(err);
+        }
+    }
+
+    async function getSensorsByBuilding(building: string) {
+        try {
+            const response = await gqlClient.query({
+                getSensorsByBuilding: {
+                    __args: {
+                        building,
+                    },
+                    ...everything,
+                }
+            })
+
+            return response.getSensorsByBuilding || [];
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async function getSensorUniqueBuildings() {
+        try {
+            const response = await gqlClient.query({
+                getSensorUniqueBuildings: true
+            });
+
+            uniqueBuildings.value = response.getSensorUniqueBuildings || [];
+        } catch (err) {
+            console.error('Failed to fetch unique buildings:', err);
         }
     }
 
@@ -187,6 +218,10 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         setVisible,
         updateAlarm,
         createSensor,
+        getSensorsByBuilding,
+        getSensorUniqueBuildings,
+        uniqueBuildings,
+        getUniqueBuildings,
     };
 },
 )
