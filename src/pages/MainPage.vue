@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-for="building in uniqueBuildings" :key="building" class="building-section">
-            <h3>{{ building }}</h3>
+            <h3 class="building-title">{{ building }}</h3>
             <div class="card-container" v-if="sensorsByBuilding[building]">
                 <div v-for="sensor in sensorsByBuilding[building]" :key="sensor._id" class="card-item">
                     <SensorView :sensor="sensor" :entry="getEntryForSensor(sensor.address, sensor.sensor_id)" />
@@ -101,5 +101,20 @@ function getEntryForSensor(sensorAddress: string, sensorId: number) {
 
 .sensor-card:hover {
     transform: scale(1.02);
+}
+
+.building-title {
+    font-size: 2rem;
+    font-weight: bold;
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    color: #333;
+    background-color: #f0f0f0;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
 }
 </style>
