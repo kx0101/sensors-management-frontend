@@ -5,17 +5,60 @@
             <div class="card-container" v-if="sensorsByBuilding[building]">
                 <div v-for="sensor in sensorsByBuilding[building]" :key="sensor._id" class="card-item">
                     <SensorView :sensor="sensor" :entry="getEntryForSensor(sensor.address, sensor.sensor_id)" />
+
+                    <template>
+                        <Dialog v-for="dialog in dialogs" :key="dialog.id" v-model:visible="dialog.visible"
+                            class="flex flex-col space-y-4" header="Πληροφορίες Συναγερμού" :closable="false"
+                            :modal="true" width="500px">
+                            <div class="p-4">
+                                <div class="flex flex-row items-start space-x-2 mb-4">
+                                    <i class="pi pi-building text-2xl text-green-500 mr-2"></i>
+
+                                    <div class="flex flex-col">
+                                        <p class="m-0"><strong>Κτίριο:</strong>
+                                            {{ dialog.sensorBuilding }}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-row items-start space-x-2 mb-4">
+                                    <i class="pi pi-microchip text-2xl text-primary mr-2"></i>
+                                    <div class="flex flex-col">
+                                        <p class="m-0"><strong>Αισθητήρας:</strong> {{ sensor.name }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-row items-start space-x-2 mb-4">
+                                    <i class="pi pi-bell text-2xl text-red-500 mr-2"></i>
+
+                                    <div class="flex flex-col">
+                                        <p class="m-0"><strong>Αιτία:</strong>
+                                            {{ dialog.reason }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <template #footer>
+                                <div class="flex justify-end">
+                                    <Button label="Απενεργοποίηση" icon="pi pi-check" class="p-button-success mr-2"
+                                        @click="aknowledgeAlert(dialog.id)" />
+                                </div>
+                            </template>
+                        </Dialog>
+                    </template>
                 </div>
             </div>
         </div>
     </div>
+
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, computed, watch, onBeforeUnmount } from 'vue';
 import { useSensorsDataStore } from '../../store';
-import { wsManager } from '../../wsManager';
-import type { IEntry } from '../../types';
+import { wsManager, entryCreatedQuery, alarmCreatedQuery } from '../../wsManager';
+import type { IAlarm, IEntry, ISensor } from '../../types';
 import SensorView from '../components/SensorView.vue';
 import { router } from '../Approutes'
 import { useAuthStore } from '../../usersStore';
@@ -27,6 +70,8 @@ const uniqueBuildings = computed(() => store.getUniqueBuildings);
 
 const sensorsByBuilding = ref({});
 const currentEntry = ref<IEntry | null>(null);
+const showAlarmDialog = ref<boolean>(false);
+const dialogs = ref([]);
 
 onMounted(async () => {
     const token = auth.initializeAuth();
@@ -35,12 +80,75 @@ onMounted(async () => {
     }
 
     await store.getSensorUniqueBuildings();
-    wsManager.subscribe(handleNewEntry);
+    await fetchAlarms();
+    wsManager.subscribe('entryCreated', entryCreatedQuery, handleNewEntry);
+    wsManager.subscribe('alarmCreated', alarmCreatedQuery, handleNewAlarm);
+    console.log(wsManager.activeSubscriptions);
 });
 
 onBeforeUnmount(() => {
-    wsManager.unsubscribe();
+    wsManager.unsubscribe('entryCreated');
+    wsManager.unsubscribe('alarmCreated');
 });
+
+function toggleDialog(dialogId: string) {
+    const dialog = dialogs.value.find(dialog => dialog.id === dialogId);
+
+    if (dialog) {
+        dialog.visible = !dialog.visible;
+    }
+}
+
+async function aknowledgeAlert(dialogId: string) {
+    await store.updateAlarm(dialogId, true);
+    toggleDialog(dialogId);
+}
+
+async function fetchAlarms() {
+    try {
+        const alarms = await store.getAlarmsByAknowledged(false);
+        if (!alarms.length) {
+            console.log('No alarms found');
+            return;
+        }
+
+        const requests = new Map();
+        alarms.forEach(alarm => {
+            const cacheKey = `${alarm.address}-${alarm.sensor}`;
+            requests.set(cacheKey, alarm);
+        });
+
+        const uniqueRequests = Array.from(requests.values());
+
+        const sensors = await store.getSensorsByBatch(uniqueRequests.map(alarm => ({
+            address: alarm.address,
+            sensor_id: alarm.sensor
+        })));
+
+        const dialogsData = uniqueRequests.map(alarm => {
+            const sensorByAlarm = sensors.find(sensor => sensor.address === alarm.address && sensor.sensor_id === alarm.sensor);
+            return {
+                id: alarm._id,
+                sensor_id: sensorByAlarm._id,
+                sensorBuilding: sensorByAlarm ? sensorByAlarm.building : 'Unknown',
+                sensorLocation: sensorByAlarm ? sensorByAlarm.location : 'Unknown',
+                description: sensorByAlarm ? sensorByAlarm.description : 'Unknown',
+                reason: alarm.reason,
+                createdAt: alarm.createdAt,
+            };
+        });
+
+        dialogs.value = dialogsData.filter(data => data);
+
+        dialogs.value.forEach((dialog) => {
+            toggleDialog(dialog.id)
+        })
+
+        console.log(dialogs.value);
+    } catch (error) {
+        console.error('Failed to fetch alarms:', error);
+    }
+}
 
 watch(uniqueBuildings, async (newUniqueBuildings) => {
     for (const building of newUniqueBuildings) {
@@ -55,7 +163,39 @@ watch(uniqueBuildings, async (newUniqueBuildings) => {
 }, { deep: true });
 
 function handleNewEntry(newEntry: IEntry) {
+    if (!newEntry) {
+        return
+    }
+
     currentEntry.value = newEntry;
+}
+
+async function handleNewAlarm(newAlarm: IAlarm) {
+    if (!newAlarm) {
+        return;
+    }
+
+    const sensor: ISensor | null = await store.getSensorByAddressAndId(newAlarm.address, newAlarm.sensor);
+
+    if (!sensor) {
+        console.warn('Sensor for new alarm not found');
+        return;
+    }
+
+    const newDialog = {
+        id: newAlarm._id,
+        visible: true,
+        sensor_id: sensor._id,
+        sensorBuilding: sensor.building || 'Unknown',
+        sensorLocation: sensor.location || 'Unknown',
+        description: sensor.description || 'Unknown',
+        reason: newAlarm.reason,
+        createdAt: newAlarm.createdAt,
+    };
+
+    dialogs.value.push(newDialog);
+
+    console.log('New alarm dialog created:', newDialog);
 }
 
 function getEntryForSensor(sensorAddress: string, sensorId: number) {

@@ -2,10 +2,9 @@ export default {
     "scalars": [
         1,
         2,
-        4,
+        3,
         5,
         15,
-        23,
         24,
         25,
         26,
@@ -71,7 +70,8 @@ export default {
         86,
         87,
         88,
-        89
+        89,
+        90
     ],
     "types": {
         "Query": {
@@ -97,6 +97,14 @@ export default {
                     "sensor": [
                         2,
                         "Int!"
+                    ]
+                }
+            ],
+            "getAlarmsByAknowledged": [
+                6,
+                {
+                    "aknowledged": [
+                        3
                     ]
                 }
             ],
@@ -149,20 +157,29 @@ export default {
             "getSensorUniqueBuildings": [
                 1
             ],
+            "getSensorsByBatch": [
+                18,
+                {
+                    "inputs": [
+                        21,
+                        "[SensorBatchInput!]!"
+                    ]
+                }
+            ],
             "users": [
-                21
+                22
             ],
             "user": [
-                21,
+                22,
                 {
                     "user": [
-                        22,
+                        23,
                         "UserInput!"
                     ]
                 }
             ],
             "userByUsername": [
-                21,
+                22,
                 {
                     "username": [
                         1,
@@ -176,6 +193,7 @@ export default {
         },
         "String": {},
         "Int": {},
+        "Boolean": {},
         "Mutation": {
             "createAlarm": [
                 6,
@@ -253,7 +271,7 @@ export default {
                 18,
                 {
                     "_id": [
-                        4,
+                        5,
                         "ID!"
                     ]
                 }
@@ -262,11 +280,11 @@ export default {
                 18,
                 {
                     "_id": [
-                        4,
+                        5,
                         "ID!"
                     ],
                     "status": [
-                        5,
+                        3,
                         "Boolean!"
                     ]
                 }
@@ -276,10 +294,9 @@ export default {
             ]
         },
         "ID": {},
-        "Boolean": {},
         "Alarm": {
             "_id": [
-                4
+                5
             ],
             "address": [
                 1
@@ -291,13 +308,13 @@ export default {
                 1
             ],
             "aknowledged": [
-                5
+                3
             ],
             "createdAt": [
-                25
+                26
             ],
             "updatedAt": [
-                25
+                26
             ],
             "__typename": [
                 1
@@ -330,10 +347,10 @@ export default {
         },
         "AlarmUpdate": {
             "_id": [
-                4
+                5
             ],
             "aknowledged": [
-                5
+                3
             ],
             "__typename": [
                 1
@@ -341,7 +358,7 @@ export default {
         },
         "SensorID": {
             "sensor": [
-                4
+                5
             ],
             "__typename": [
                 1
@@ -360,10 +377,10 @@ export default {
         },
         "Bell": {
             "_id": [
-                4
+                5
             ],
             "status": [
-                5
+                3
             ],
             "__typename": [
                 1
@@ -371,10 +388,10 @@ export default {
         },
         "BellUpdate": {
             "_id": [
-                4
+                5
             ],
             "status": [
-                5
+                3
             ],
             "__typename": [
                 1
@@ -382,7 +399,7 @@ export default {
         },
         "Entry": {
             "_id": [
-                4
+                5
             ],
             "address": [
                 1
@@ -394,13 +411,13 @@ export default {
                 15
             ],
             "expireAt": [
-                25
+                26
             ],
             "createdAt": [
-                25
+                26
             ],
             "updatedAt": [
-                25
+                26
             ],
             "__typename": [
                 1
@@ -437,7 +454,7 @@ export default {
         },
         "Sensor": {
             "_id": [
-                4
+                5
             ],
             "name": [
                 1
@@ -461,7 +478,7 @@ export default {
                 1
             ],
             "status": [
-                5
+                3
             ],
             "building": [
                 1
@@ -499,7 +516,7 @@ export default {
                 1
             ],
             "status": [
-                5
+                3
             ],
             "building": [
                 1
@@ -516,7 +533,7 @@ export default {
         },
         "SensorUpdate": {
             "_id": [
-                4
+                5
             ],
             "name": [
                 1
@@ -540,7 +557,7 @@ export default {
                 1
             ],
             "status": [
-                5
+                3
             ],
             "building": [
                 1
@@ -550,6 +567,17 @@ export default {
             ],
             "down_limit": [
                 15
+            ],
+            "__typename": [
+                1
+            ]
+        },
+        "SensorBatchInput": {
+            "address": [
+                1
+            ],
+            "sensor_id": [
+                2
             ],
             "__typename": [
                 1

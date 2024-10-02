@@ -6,8 +6,8 @@
 export type Scalars = {
     String: string,
     Int: number,
-    ID: string,
     Boolean: boolean,
+    ID: string,
     Float: number,
     Date: any,
     Time: any,
@@ -82,6 +82,7 @@ export interface Query {
     alarms: ((Alarm | null)[] | null)
     alarm: ((Alarm | null)[] | null)
     getAlarmByAddressAndId: (Alarm | null)
+    getAlarmsByAknowledged: ((Alarm | null)[] | null)
     bell: (Bell | null)
     entries: ((Entry | null)[] | null)
     sensors: ((Sensor | null)[] | null)
@@ -89,6 +90,7 @@ export interface Query {
     getSensorByAddressAndId: (Sensor | null)
     getSensorsByBuilding: ((Sensor | null)[] | null)
     getSensorUniqueBuildings: ((Scalars['String'] | null)[] | null)
+    getSensorsByBatch: Sensor[]
     users: ((User | null)[] | null)
     user: (User | null)
     userByUsername: (User | null)
@@ -170,6 +172,7 @@ export interface QueryGenqlSelection{
     alarms?: AlarmGenqlSelection
     alarm?: (AlarmGenqlSelection & { __args: {sensor: SensorInput} })
     getAlarmByAddressAndId?: (AlarmGenqlSelection & { __args: {address: Scalars['String'], sensor: Scalars['Int']} })
+    getAlarmsByAknowledged?: (AlarmGenqlSelection & { __args?: {aknowledged?: (Scalars['Boolean'] | null)} })
     bell?: BellGenqlSelection
     entries?: (EntryGenqlSelection & { __args: {sensor: EntryID} })
     sensors?: SensorGenqlSelection
@@ -177,6 +180,7 @@ export interface QueryGenqlSelection{
     getSensorByAddressAndId?: (SensorGenqlSelection & { __args: {address: Scalars['String'], sensor_id: Scalars['Int']} })
     getSensorsByBuilding?: (SensorGenqlSelection & { __args: {building: Scalars['String']} })
     getSensorUniqueBuildings?: boolean | number
+    getSensorsByBatch?: (SensorGenqlSelection & { __args: {inputs: SensorBatchInput[]} })
     users?: UserGenqlSelection
     user?: (UserGenqlSelection & { __args: {user: UserInput} })
     userByUsername?: (UserGenqlSelection & { __args: {username: Scalars['String']} })
@@ -271,6 +275,8 @@ export interface SensorGenqlSelection{
 export interface SensorCreate {name: Scalars['String'],description?: (Scalars['String'] | null),address: Scalars['String'],location: Scalars['String'],type: Scalars['String'],sensor_id: Scalars['Int'],unit?: (Scalars['String'] | null),status?: (Scalars['Boolean'] | null),building?: (Scalars['String'] | null),up_limit?: (Scalars['Float'] | null),down_limit?: (Scalars['Float'] | null)}
 
 export interface SensorUpdate {_id: Scalars['ID'],name?: (Scalars['String'] | null),description?: (Scalars['String'] | null),address?: (Scalars['String'] | null),location?: (Scalars['String'] | null),type?: (Scalars['String'] | null),sensor_id?: (Scalars['Int'] | null),unit?: (Scalars['String'] | null),status?: (Scalars['Boolean'] | null),building?: (Scalars['String'] | null),up_limit?: (Scalars['Float'] | null),down_limit?: (Scalars['Float'] | null)}
+
+export interface SensorBatchInput {address: Scalars['String'],sensor_id: Scalars['Int']}
 
 export interface UserGenqlSelection{
     id?: boolean | number

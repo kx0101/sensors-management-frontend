@@ -46,6 +46,41 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         }
     }
 
+    async function getSensorByAddressAndId(address: string, sensor_id: number) {
+        try {
+            const response = await gqlClient.query({
+                getSensorByAddressAndId: {
+                    __args: {
+                        address,
+                        sensor_id,
+                    },
+                    ...everything,
+                }
+            })
+
+            return response.getSensorByAddressAndId || null
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async function getSensorsByBatch(sensorInputs) {
+        try {
+            const response = await gqlClient.query({
+                getSensorsByBatch: {
+                    __args: {
+                        inputs: sensorInputs,
+                    },
+                    ...everything,
+                }
+            })
+
+            return response.getSensorsByBatch || [];
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     async function getSensorsByBuilding(building: string) {
         try {
             const response = await gqlClient.query({
@@ -156,13 +191,34 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         visible.value = !visible.value;
     }
 
-    async function updateAlarm(alarm: any) {
+    async function getAlarmsByAknowledged(aknowledged: boolean) {
+        try {
+            const response = await gqlClient.query({
+                getAlarmsByAknowledged: {
+                    __args: {
+                        aknowledged
+                    },
+                    ...everything
+                }
+            });
+
+            return response.getAlarmsByAknowledged || [];
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async function updateAlarm(alarmId: string, aknowledged: boolean) {
         try {
             const response = await gqlClient.mutation({
                 updateAlarm: {
                     __args: {
-                        alarmInput: alarm,
-                    }
+                        alarmInput: {
+                            _id: alarmId,
+                            aknowledged
+                        },
+                    },
+                    ...everything,
                 },
             });
 
@@ -222,6 +278,9 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         getSensorUniqueBuildings,
         uniqueBuildings,
         getUniqueBuildings,
+        getAlarmsByAknowledged,
+        getSensorsByBatch,
+        getSensorByAddressAndId,
     };
 },
 )

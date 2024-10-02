@@ -2,6 +2,7 @@ type Query {
   alarms: [Alarm]
   alarm(sensor: SensorInput!): [Alarm]
   getAlarmByAddressAndId(address: String!, sensor: Int!): Alarm
+  getAlarmsByAknowledged(aknowledged: Boolean): [Alarm]
   bell: Bell
   entries(sensor: EntryID!): [Entry]
   sensors: [Sensor]
@@ -9,6 +10,7 @@ type Query {
   getSensorByAddressAndId(address: String!, sensor_id: Int!): Sensor
   getSensorsByBuilding(building: String!): [Sensor]
   getSensorUniqueBuildings: [String]
+  getSensorsByBatch(inputs: [SensorBatchInput!]!): [Sensor!]!
   users: [User]
   user(user: UserInput!): User
   userByUsername(username: String!): User
@@ -136,6 +138,11 @@ input SensorUpdate {
   building: String
   up_limit: Float
   down_limit: Float
+}
+
+input SensorBatchInput {
+  address: String!
+  sensor_id: Int!
 }
 
 type User {

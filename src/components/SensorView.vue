@@ -1,24 +1,24 @@
 <template>
-    <Card>
+    <Card :class="{ 'alarm-active': alarm }">
         <template #title>
             {{ props.sensor.name }}
         </template>
         <template #subtitle>
             <div class="grid grid-cols-5 items-center gap-3">
-                <div class="col-span-2">
+                <div class="column-span-2">
                     <p class="ml-2 mt-1">Ενδείξεις:</p>
                 </div>
-                <div class="col-span-1 flex justify-center">
-                    <i class="pi pi-wifi mt-1" :class="!status ? '' : 'text-primary'"></i>
+                <div class="column-span-1 flex justify-center">
+                    <i class="pi pi-wifi mt-1 text-2xl" :class="!status ? '' : 'text-primary'"></i>
                 </div>
-                <div class="col-span-1 flex justify-center">
-                    <i class="pi pi-cog mt-1" :class="!response ? '' : 'text-primary'"></i>
+                <div class="column-span-1 flex justify-center">
+                    <i class="pi pi-cog mt-1 text-2xl" :class="!response ? '' : 'text-primary'"></i>
                 </div>
-                <div class="col-span-1 flex justify-center">
-                    <i class="pi pi-exclamation-triangle mt-1" :class="!warning ? '' : 'text-yellow-500'"></i>
+                <div class="column-span-1 flex justify-center">
+                    <i class="pi pi-exclamation-triangle mt-1 text-2xl" :class="!warning ? '' : 'text-yellow-500'"></i>
                 </div>
-                <div class="col-span-1 flex justify-center">
-                    <i class="pi pi-bell mt-1" :class="!alarm ? '' : 'text-red-500'"></i>
+                <div class="column-span-1 flex justify-center">
+                    <i class="pi pi-bell mt-1 text-2xl" :class="alarm && 'text-red-500'"></i>
                 </div>
             </div>
         </template>
@@ -28,15 +28,16 @@
             </div>
             <div class="flex flex-row flex-wrap gap-2" v-if="visible">
                 <h2 v-if="props.sensor.type === 'Gauge' && props.sensor.sensor_id === 4"
-                    class="material-icons text-primary">
+                    class="material-icons text-primary text-3xl">
                     thermostat
                 </h2>
                 <h2 v-if="props.sensor.type === 'Gauge' && props.sensor.sensor_id === 5"
-                    class="material-icons text-primary">
+                    class="material-icons text-primary text-3xl">
                     water_drop
                 </h2>
-                <h2 v-if="props.sensor.type === 'Digital'" class="material-icons text-primary">flood</h2>
-                <h2 v-if="props.sensor.type === 'Digital2'" class="material-icons text-primary">offline_bolt</h2>
+                <h2 v-if="props.sensor.type === 'Digital'" class="material-icons text-primary text-3xl">flood</h2>
+                <h2 v-if="props.sensor.type === 'Digital2'" class="material-icons text-primary text-3xl">offline_bolt
+                </h2>
 
                 <Knob readonly v-if="props.sensor.type === 'Gauge' && props.sensor.sensor_id === 5"
                     valueColor="var(--primary-color)" v-model="localEntryValue" :step="10" :size="80"
@@ -67,17 +68,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { defineProps } from 'vue';
 import type { IEntry, ISensor } from '../../types';
+import Button from 'primevue/button';
+import { useSensorsDataStore } from '../../store';
 
 const props = defineProps<{
     sensor: ISensor;
     entry: IEntry | null | undefined;
 }>();
 
-const localEntryValue = ref<number | null>(null);
+const store = useSensorsDataStore();
 
+const localEntryValue = ref<number | null>(null);
 const visible = ref<boolean>(false);
 const response = ref<boolean>(false);
 const status = ref<boolean>(false);
@@ -86,13 +90,24 @@ const alarm = ref<boolean>(false);
 
 watch(() => props.entry, (newEntry) => {
     if (newEntry) {
+        alarm.value = newEntry.value > props.sensor.up_limit || newEntry.value < props.sensor.down_limit;
         localEntryValue.value = newEntry.value;
         visible.value = true;
         status.value = true;
-    } else {
-        localEntryValue.value = null;
-        visible.value = false;
-        status.value = false;
     }
-}, { immediate: true }); 
+}, { immediate: true });
 </script>
+
+<style scoped>
+.alarm-active {
+    border: 1px solid #ff4d4d;
+}
+
+.text-2xl {
+    font-size: 1.5rem;
+}
+
+.text-3xl {
+    font-size: 2rem;
+}
+</style>
