@@ -25,6 +25,7 @@ import { definePreset } from '@primevue/themes';
 import Knob from 'primevue/knob';
 import ProgressSpinner from 'primevue/progressspinner';
 import 'material-icons/iconfont/material-icons.css';
+import Checkbox from 'primevue/checkbox';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -71,5 +72,6 @@ app.component('NavBar', NavBar);
 app.component('Image', Image);
 app.component('Knob', Knob);
 app.component('ProgressSpinner', ProgressSpinner);
+app.component('Checkbox', Checkbox);
 
 app.mount('#app');

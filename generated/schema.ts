@@ -125,6 +125,7 @@ export interface Alarm {
 export interface Subscription {
     alarmCreated: (Alarm | null)
     entryCreated: (Entry | null)
+    timeoutCreated: (timeoutData | null)
     __typename: 'Subscription'
 }
 
@@ -143,6 +144,13 @@ export interface Entry {
     createdAt: (Scalars['DateTime'] | null)
     updatedAt: (Scalars['DateTime'] | null)
     __typename: 'Entry'
+}
+
+export interface timeoutData {
+    _id: Scalars['ID']
+    sensor_id: Scalars['String']
+    timeout: (Scalars['DateTime'] | null)
+    __typename: 'timeoutData'
 }
 
 export interface Sensor {
@@ -226,6 +234,7 @@ export interface SensorID {sensor: Scalars['ID']}
 export interface SubscriptionGenqlSelection{
     alarmCreated?: AlarmGenqlSelection
     entryCreated?: EntryGenqlSelection
+    timeoutCreated?: timeoutDataGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -254,6 +263,14 @@ export interface EntryGenqlSelection{
 export interface EntryID {address: Scalars['String'],sensor: Scalars['Int'],period: Scalars['Int']}
 
 export interface EntryCreate {address: Scalars['String'],sensor: Scalars['Int'],value: Scalars['Float']}
+
+export interface timeoutDataGenqlSelection{
+    _id?: boolean | number
+    sensor_id?: boolean | number
+    timeout?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
 
 export interface SensorGenqlSelection{
     _id?: boolean | number
@@ -333,6 +350,14 @@ export interface UserInput {id: Scalars['String']}
     export const isEntry = (obj?: { __typename?: any } | null): obj is Entry => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isEntry"')
       return Entry_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const timeoutData_possibleTypes: string[] = ['timeoutData']
+    export const istimeoutData = (obj?: { __typename?: any } | null): obj is timeoutData => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "istimeoutData"')
+      return timeoutData_possibleTypes.includes(obj.__typename)
     }
     
 

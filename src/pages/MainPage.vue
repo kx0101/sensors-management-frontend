@@ -1,10 +1,19 @@
 <template>
     <div>
-        <div v-for="building in uniqueBuildings" :key="building" class="building-section">
+
+        <div class="checkbox-row">
+            <div v-for="building of uniqueBuildings" :key="building" class="checkbox-item">
+                <Checkbox v-model="selectedBuildings" :inputId="building" name="building" :value="building" />
+                <label :for="building">{{ building }}</label>
+            </div>
+        </div>
+
+        <div v-for="building in selectedBuildings" :key="building" :class="{ 'building-section': building }">
             <h3 class="building-title">{{ building }}</h3>
             <div class="card-container" v-if="sensorsByBuilding[building]">
                 <div v-for="sensor in sensorsByBuilding[building]" :key="sensor._id" class="card-item">
-                    <SensorView :sensor="sensor" :entry="getEntryForSensor(sensor.address, sensor.sensor_id)" />
+                    <SensorView :timeout="isTimeout(sensor._id)" :sensor="sensor"
+                        :entry="getEntryForSensor(sensor.address, sensor.sensor_id)" />
 
                     <template>
                         <Dialog v-for="dialog in dialogs" :key="dialog.id" v-model:visible="dialog.visible"
@@ -57,7 +66,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch, onBeforeUnmount } from 'vue';
 import { useSensorsDataStore } from '../../store';
-import { wsManager, entryCreatedQuery, alarmCreatedQuery } from '../../wsManager';
+import { wsManager, entryCreatedQuery, alarmCreatedQuery, timeoutCreatedQuery } from '../../wsManager';
 import type { IAlarm, IEntry, ISensor } from '../../types';
 import SensorView from '../components/SensorView.vue';
 import { router } from '../Approutes'
@@ -71,7 +80,9 @@ const uniqueBuildings = computed(() => store.getUniqueBuildings);
 const sensorsByBuilding = ref({});
 const currentEntry = ref<IEntry | null>(null);
 const showAlarmDialog = ref<boolean>(false);
+const timeoutSensors = ref<Map<string, Date>>(new Map());
 const dialogs = ref([]);
+const selectedBuildings = ref([]);
 
 onMounted(async () => {
     const token = auth.initializeAuth();
@@ -83,11 +94,13 @@ onMounted(async () => {
     await fetchAlarms();
     wsManager.subscribe('entryCreated', entryCreatedQuery, handleNewEntry);
     wsManager.subscribe('alarmCreated', alarmCreatedQuery, handleNewAlarm);
+    wsManager.subscribe('timeoutCreated', timeoutCreatedQuery, handleNewTimeout);
 });
 
 onBeforeUnmount(() => {
     wsManager.unsubscribe('entryCreated');
     wsManager.unsubscribe('alarmCreated');
+    wsManager.unsubscribe('timeoutCreated');
 });
 
 function toggleDialog(dialogId: string) {
@@ -149,6 +162,7 @@ async function fetchAlarms() {
 
 watch(uniqueBuildings, async (newUniqueBuildings) => {
     for (const building of newUniqueBuildings) {
+        selectedBuildings.value.push(building);
         const sensors = await store.getSensorsByBuilding(building);
 
         if (sensors.length > 0) {
@@ -193,6 +207,24 @@ async function handleNewAlarm(newAlarm: IAlarm) {
     dialogs.value.push(newDialog);
 }
 
+async function handleNewTimeout(timeout: { sensor_id: string, timeout: Date }) {
+    timeoutSensors.value.set(timeout.sensor_id, timeout.timeout);
+}
+
+function isTimeout(sensor_id: string) {
+    const timeout = timeoutSensors.value.get(sensor_id);
+
+    if (!timeout) {
+        return true;
+    }
+
+    const currentTime = Date.now();
+    const timeoutTime = new Date(timeout).getTime();
+    const fifteenMinutesInMs = 15 * 60 * 1000;
+
+    return currentTime - timeoutTime >= fifteenMinutesInMs;
+}
+
 function getEntryForSensor(sensorAddress: string, sensorId: number) {
     if (!currentEntry.value) {
         return
@@ -215,12 +247,12 @@ function getEntryForSensor(sensorAddress: string, sensorId: number) {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-
 }
 
 .card-item {
     flex: 1 1 25%;
-    min-width: 200px;
+    max-width: 400px;
+    min-height: 300px;
 }
 
 @media (max-width: 768px) {
@@ -251,5 +283,29 @@ function getEntryForSensor(sensorAddress: string, sensorId: number) {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     text-align: center;
+}
+
+.checkbox-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox-item label {
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
 }
 </style>

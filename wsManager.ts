@@ -2,7 +2,7 @@ import { Client, createClient as createWsClient } from 'graphql-ws';
 
 class WebSocketManager {
     private wsClient: Client;
-    public activeSubscriptions: Record<string, boolean> = {};
+    private activeSubscriptions: Record<string, boolean> = {};
 
     constructor() {
         this.wsClient = createWsClient({
@@ -65,6 +65,15 @@ subscription AlarmSubscription {
         reason
         sensor
         updatedAt
+    }
+}
+`
+
+export const timeoutCreatedQuery = `
+subscription TimeoutSubscription {
+    timeoutCreated {
+        sensor_id
+        timeout
     }
 }
 `

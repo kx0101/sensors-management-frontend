@@ -62,6 +62,7 @@ input SensorID {
 type Subscription {
   alarmCreated: Alarm
   entryCreated: Entry
+  timeoutCreated: timeoutData
 }
 
 type Bell {
@@ -94,6 +95,12 @@ input EntryCreate {
   address: String!
   sensor: Int!
   value: Float!
+}
+
+type timeoutData {
+  _id: ID!
+  sensor_id: String!
+  timeout: DateTime
 }
 
 type Sensor {

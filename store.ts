@@ -157,7 +157,6 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
                 },
             });
 
-            console.log(response);
         } catch (err) {
             console.error(err);
         }
@@ -222,7 +221,6 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
                 },
             });
 
-            console.log(response);
         } catch (err) {
             console.error(err);
         }
@@ -251,7 +249,6 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
                 },
             });
 
-            console.log(response);
         } catch (err) {
             console.error(err);
         }

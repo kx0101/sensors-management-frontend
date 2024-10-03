@@ -1,5 +1,5 @@
 <template>
-    <Card :class="{ 'alarm-active': alarm }">
+    <Card :class="{ 'alarm-active': alarm }" class="w-full h-full">
         <template #title>
             {{ props.sensor.name }}
         </template>
@@ -9,13 +9,13 @@
                     <p class="ml-2 mt-1">Ενδείξεις:</p>
                 </div>
                 <div class="column-span-1 flex justify-center">
-                    <i class="pi pi-wifi mt-1 text-2xl" :class="!status ? '' : 'text-primary'"></i>
+                    <i class="pi pi-wifi mt-1 text-2xl" :class="!warning && 'text-primary'"></i>
                 </div>
                 <div class="column-span-1 flex justify-center">
-                    <i class="pi pi-cog mt-1 text-2xl" :class="!response ? '' : 'text-primary'"></i>
+                    <p class="material-icons text-3xl mt-1" :class="response && 'text-primary'">{{ 'sensors' }}</p>
                 </div>
                 <div class="column-span-1 flex justify-center">
-                    <i class="pi pi-exclamation-triangle mt-1 text-2xl" :class="!warning ? '' : 'text-yellow-500'"></i>
+                    <i class="pi pi-exclamation-triangle mt-1 text-2xl" :class="warning && 'text-yellow-500'"></i>
                 </div>
                 <div class="column-span-1 flex justify-center">
                     <i class="pi pi-bell mt-1 text-2xl" :class="alarm && 'text-red-500'"></i>
@@ -77,6 +77,7 @@ import { useSensorsDataStore } from '../../store';
 const props = defineProps<{
     sensor: ISensor;
     entry: IEntry | null | undefined;
+    timeout: boolean | undefined;
 }>();
 
 const store = useSensorsDataStore();
@@ -84,17 +85,23 @@ const store = useSensorsDataStore();
 const localEntryValue = ref<number | null>(null);
 const visible = ref<boolean>(false);
 const response = ref<boolean>(false);
-const status = ref<boolean>(false);
-const warning = ref<boolean>(false);
+const warning = ref<boolean>(props.timeout);
 const alarm = ref<boolean>(false);
 
+watch(() => props.timeout, (newTimeout) => {
+    warning.value = newTimeout;
+})
+
 watch(() => props.entry, (newEntry) => {
+    response.value = true;
+
     if (newEntry) {
         alarm.value = newEntry.value > props.sensor.up_limit || newEntry.value < props.sensor.down_limit;
         localEntryValue.value = newEntry.value;
         visible.value = true;
-        status.value = true;
     }
+
+    response.value = false;
 }, { immediate: true });
 </script>
 

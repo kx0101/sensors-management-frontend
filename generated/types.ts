@@ -5,7 +5,6 @@ export default {
         3,
         5,
         15,
-        24,
         25,
         26,
         27,
@@ -71,7 +70,8 @@ export default {
         87,
         88,
         89,
-        90
+        90,
+        91
     ],
     "types": {
         "Query": {
@@ -121,10 +121,10 @@ export default {
                 }
             ],
             "sensors": [
-                18
+                19
             ],
             "sensor": [
-                18,
+                19,
                 {
                     "location": [
                         1,
@@ -133,7 +133,7 @@ export default {
                 }
             ],
             "getSensorByAddressAndId": [
-                18,
+                19,
                 {
                     "address": [
                         1,
@@ -146,7 +146,7 @@ export default {
                 }
             ],
             "getSensorsByBuilding": [
-                18,
+                19,
                 {
                     "building": [
                         1,
@@ -158,28 +158,28 @@ export default {
                 1
             ],
             "getSensorsByBatch": [
-                18,
+                19,
                 {
                     "inputs": [
-                        21,
+                        22,
                         "[SensorBatchInput!]!"
                     ]
                 }
             ],
             "users": [
-                22
+                23
             ],
             "user": [
-                22,
+                23,
                 {
                     "user": [
-                        23,
+                        24,
                         "UserInput!"
                     ]
                 }
             ],
             "userByUsername": [
-                22,
+                23,
                 {
                     "username": [
                         1,
@@ -250,25 +250,25 @@ export default {
                 }
             ],
             "createSensor": [
-                18,
+                19,
                 {
                     "sensorInput": [
-                        19,
+                        20,
                         "SensorCreate!"
                     ]
                 }
             ],
             "updateSensor": [
-                18,
+                19,
                 {
                     "sensorInput": [
-                        20,
+                        21,
                         "SensorUpdate!"
                     ]
                 }
             ],
             "deleteSensor": [
-                18,
+                19,
                 {
                     "_id": [
                         5,
@@ -277,7 +277,7 @@ export default {
                 }
             ],
             "updateStatusSensor": [
-                18,
+                19,
                 {
                     "_id": [
                         5,
@@ -311,10 +311,10 @@ export default {
                 3
             ],
             "createdAt": [
-                26
+                27
             ],
             "updatedAt": [
-                26
+                27
             ],
             "__typename": [
                 1
@@ -371,6 +371,9 @@ export default {
             "entryCreated": [
                 14
             ],
+            "timeoutCreated": [
+                18
+            ],
             "__typename": [
                 1
             ]
@@ -411,13 +414,13 @@ export default {
                 15
             ],
             "expireAt": [
-                26
+                27
             ],
             "createdAt": [
-                26
+                27
             ],
             "updatedAt": [
-                26
+                27
             ],
             "__typename": [
                 1
@@ -447,6 +450,20 @@ export default {
             ],
             "value": [
                 15
+            ],
+            "__typename": [
+                1
+            ]
+        },
+        "timeoutData": {
+            "_id": [
+                5
+            ],
+            "sensor_id": [
+                1
+            ],
+            "timeout": [
+                27
             ],
             "__typename": [
                 1
