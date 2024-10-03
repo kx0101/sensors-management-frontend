@@ -83,7 +83,6 @@ onMounted(async () => {
     await fetchAlarms();
     wsManager.subscribe('entryCreated', entryCreatedQuery, handleNewEntry);
     wsManager.subscribe('alarmCreated', alarmCreatedQuery, handleNewAlarm);
-    console.log(wsManager.activeSubscriptions);
 });
 
 onBeforeUnmount(() => {
@@ -143,8 +142,6 @@ async function fetchAlarms() {
         dialogs.value.forEach((dialog) => {
             toggleDialog(dialog.id)
         })
-
-        console.log(dialogs.value);
     } catch (error) {
         console.error('Failed to fetch alarms:', error);
     }
@@ -194,8 +191,6 @@ async function handleNewAlarm(newAlarm: IAlarm) {
     };
 
     dialogs.value.push(newDialog);
-
-    console.log('New alarm dialog created:', newDialog);
 }
 
 function getEntryForSensor(sensorAddress: string, sensorId: number) {
