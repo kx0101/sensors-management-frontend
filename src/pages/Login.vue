@@ -46,7 +46,7 @@ const { isLoggedIn } = auth;
 onMounted(() => {
     const token = auth.initializeAuth();
     if (token) {
-        router.push('/sensors');
+        router.push('/');
     }
 });
 
@@ -59,6 +59,6 @@ const login = async (username: string, password: string) => {
     }
 
     toast.add({ severity: 'success', summary: 'Σύνδεση', detail: 'Συνδεθήκατε με επιτυχία', life: 5000 })
-    await router.push('/sensors');
+    await router.push('/');
 }
 </script>
