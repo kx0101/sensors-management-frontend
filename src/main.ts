@@ -26,6 +26,9 @@ import Knob from 'primevue/knob';
 import ProgressSpinner from 'primevue/progressspinner';
 import 'material-icons/iconfont/material-icons.css';
 import Checkbox from 'primevue/checkbox';
+import DataTable from 'primevue/datatable';
+import Tag from 'primevue/tag';
+import Column from 'primevue/column';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -73,5 +76,8 @@ app.component('Image', Image);
 app.component('Knob', Knob);
 app.component('ProgressSpinner', ProgressSpinner);
 app.component('Checkbox', Checkbox);
+app.component('DataTable', DataTable);
+app.component('Tag', Tag);
+app.component('Column', Column);
 
 app.mount('#app');

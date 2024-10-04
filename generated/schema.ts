@@ -4,8 +4,8 @@
 /* eslint-disable */
 
 export type Scalars = {
-    String: string,
     Int: number,
+    String: string,
     Boolean: boolean,
     ID: string,
     Float: number,
@@ -176,7 +176,7 @@ export interface User {
 }
 
 export interface QueryGenqlSelection{
-    alarms?: AlarmGenqlSelection
+    alarms?: (AlarmGenqlSelection & { __args?: {limit?: (Scalars['Int'] | null), offset?: (Scalars['Int'] | null)} })
     alarm?: (AlarmGenqlSelection & { __args: {sensor: SensorInput} })
     getAlarmByAddressAndId?: (AlarmGenqlSelection & { __args: {address: Scalars['String'], sensor: Scalars['Int']} })
     getAlarmsByAknowledged?: (AlarmGenqlSelection & { __args?: {aknowledged?: (Scalars['Boolean'] | null)} })

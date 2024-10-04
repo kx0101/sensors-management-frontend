@@ -76,7 +76,15 @@ export default {
     "types": {
         "Query": {
             "alarms": [
-                6
+                6,
+                {
+                    "limit": [
+                        1
+                    ],
+                    "offset": [
+                        1
+                    ]
+                }
             ],
             "alarm": [
                 6,
@@ -91,11 +99,11 @@ export default {
                 6,
                 {
                     "address": [
-                        1,
+                        2,
                         "String!"
                     ],
                     "sensor": [
-                        2,
+                        1,
                         "Int!"
                     ]
                 }
@@ -127,7 +135,7 @@ export default {
                 19,
                 {
                     "location": [
-                        1,
+                        2,
                         "String!"
                     ]
                 }
@@ -136,11 +144,11 @@ export default {
                 19,
                 {
                     "address": [
-                        1,
+                        2,
                         "String!"
                     ],
                     "sensor_id": [
-                        2,
+                        1,
                         "Int!"
                     ]
                 }
@@ -149,13 +157,13 @@ export default {
                 19,
                 {
                     "building": [
-                        1,
+                        2,
                         "String!"
                     ]
                 }
             ],
             "getSensorUniqueBuildings": [
-                1
+                2
             ],
             "getSensorsByBatch": [
                 19,
@@ -182,17 +190,17 @@ export default {
                 23,
                 {
                     "username": [
-                        1,
+                        2,
                         "String!"
                     ]
                 }
             ],
             "__typename": [
-                1
+                2
             ]
         },
-        "String": {},
         "Int": {},
+        "String": {},
         "Boolean": {},
         "Mutation": {
             "createAlarm": [
@@ -214,7 +222,7 @@ export default {
                 }
             ],
             "deleteAlarms": [
-                1,
+                2,
                 {
                     "period": [
                         10,
@@ -241,7 +249,7 @@ export default {
                 }
             ],
             "deleteEntries": [
-                1,
+                2,
                 {
                     "entryInput": [
                         16,
@@ -290,7 +298,7 @@ export default {
                 }
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "ID": {},
@@ -299,13 +307,13 @@ export default {
                 5
             ],
             "address": [
-                1
-            ],
-            "sensor": [
                 2
             ],
-            "reason": [
+            "sensor": [
                 1
+            ],
+            "reason": [
+                2
             ],
             "aknowledged": [
                 3
@@ -317,32 +325,32 @@ export default {
                 27
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "SensorInput": {
             "address": [
-                1
-            ],
-            "id": [
                 2
             ],
-            "__typename": [
+            "id": [
                 1
+            ],
+            "__typename": [
+                2
             ]
         },
         "AlarmCreate": {
             "address": [
-                1
-            ],
-            "sensor": [
                 2
             ],
-            "reason": [
+            "sensor": [
                 1
             ],
+            "reason": [
+                2
+            ],
             "__typename": [
-                1
+                2
             ]
         },
         "AlarmUpdate": {
@@ -353,7 +361,7 @@ export default {
                 3
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "SensorID": {
@@ -361,7 +369,7 @@ export default {
                 5
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "Subscription": {
@@ -375,7 +383,7 @@ export default {
                 18
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "Bell": {
@@ -386,7 +394,7 @@ export default {
                 3
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "BellUpdate": {
@@ -397,7 +405,7 @@ export default {
                 3
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "Entry": {
@@ -405,10 +413,10 @@ export default {
                 5
             ],
             "address": [
-                1
+                2
             ],
             "sensor": [
-                2
+                1
             ],
             "value": [
                 15
@@ -423,47 +431,47 @@ export default {
                 27
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "Float": {},
         "EntryID": {
             "address": [
-                1
+                2
             ],
             "sensor": [
-                2
+                1
             ],
             "period": [
-                2
+                1
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "EntryCreate": {
             "address": [
-                1
+                2
             ],
             "sensor": [
-                2
+                1
             ],
             "value": [
                 15
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "timeoutData": {
             "sensor_id": [
-                1
+                2
             ],
             "timeout": [
                 27
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "Sensor": {
@@ -471,31 +479,31 @@ export default {
                 5
             ],
             "name": [
-                1
-            ],
-            "description": [
-                1
-            ],
-            "address": [
-                1
-            ],
-            "location": [
-                1
-            ],
-            "type": [
-                1
-            ],
-            "sensor_id": [
                 2
             ],
-            "unit": [
+            "description": [
+                2
+            ],
+            "address": [
+                2
+            ],
+            "location": [
+                2
+            ],
+            "type": [
+                2
+            ],
+            "sensor_id": [
                 1
+            ],
+            "unit": [
+                2
             ],
             "status": [
                 3
             ],
             "building": [
-                1
+                2
             ],
             "up_limit": [
                 15
@@ -504,36 +512,36 @@ export default {
                 15
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "SensorCreate": {
             "name": [
-                1
-            ],
-            "description": [
-                1
-            ],
-            "address": [
-                1
-            ],
-            "location": [
-                1
-            ],
-            "type": [
-                1
-            ],
-            "sensor_id": [
                 2
             ],
-            "unit": [
+            "description": [
+                2
+            ],
+            "address": [
+                2
+            ],
+            "location": [
+                2
+            ],
+            "type": [
+                2
+            ],
+            "sensor_id": [
                 1
+            ],
+            "unit": [
+                2
             ],
             "status": [
                 3
             ],
             "building": [
-                1
+                2
             ],
             "up_limit": [
                 15
@@ -542,7 +550,7 @@ export default {
                 15
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "SensorUpdate": {
@@ -550,31 +558,31 @@ export default {
                 5
             ],
             "name": [
-                1
-            ],
-            "description": [
-                1
-            ],
-            "address": [
-                1
-            ],
-            "location": [
-                1
-            ],
-            "type": [
-                1
-            ],
-            "sensor_id": [
                 2
             ],
-            "unit": [
+            "description": [
+                2
+            ],
+            "address": [
+                2
+            ],
+            "location": [
+                2
+            ],
+            "type": [
+                2
+            ],
+            "sensor_id": [
                 1
+            ],
+            "unit": [
+                2
             ],
             "status": [
                 3
             ],
             "building": [
-                1
+                2
             ],
             "up_limit": [
                 15
@@ -583,40 +591,40 @@ export default {
                 15
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "SensorBatchInput": {
             "address": [
-                1
-            ],
-            "sensor_id": [
                 2
             ],
-            "__typename": [
+            "sensor_id": [
                 1
+            ],
+            "__typename": [
+                2
             ]
         },
         "User": {
             "id": [
-                1
+                2
             ],
             "username": [
-                1
+                2
             ],
             "role": [
-                1
+                2
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "UserInput": {
             "id": [
-                1
+                2
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "Date": {},

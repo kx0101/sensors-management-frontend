@@ -21,7 +21,6 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
     const getSensor = computed(() => (id: string) => sensors.value.find((sensor) => sensor._id === id));
     const getSensors = computed(() => sensors.value);
     const getBell = computed(() => bell.value);
-    const getAlarm = computed(() => alarms.value);
     const getUniqueBuildings = computed(() => uniqueBuildings.value);
 
     async function initStore() {
@@ -205,6 +204,24 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         visible.value = !visible.value;
     }
 
+    async function getAlarms(limit: number, offset: number) {
+        try {
+            const response = await gqlClient.query({
+                alarms: {
+                    __args: {
+                        limit,
+                        offset,
+                    },
+                    ...everything
+                }
+            })
+
+            return response.alarms || [];
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     async function getAlarmsByAknowledged(aknowledged: boolean) {
         try {
             const response = await gqlClient.query({
@@ -277,7 +294,7 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         getSensor,
         getSensors,
         getBell,
-        getAlarm,
+        getAlarms,
         initStore,
         updateSensor,
         deleteSensor,
