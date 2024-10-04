@@ -147,7 +147,6 @@ export interface Entry {
 }
 
 export interface timeoutData {
-    _id: Scalars['ID']
     sensor_id: Scalars['String']
     timeout: (Scalars['DateTime'] | null)
     __typename: 'timeoutData'
@@ -265,7 +264,6 @@ export interface EntryID {address: Scalars['String'],sensor: Scalars['Int'],peri
 export interface EntryCreate {address: Scalars['String'],sensor: Scalars['Int'],value: Scalars['Float']}
 
 export interface timeoutDataGenqlSelection{
-    _id?: boolean | number
     sensor_id?: boolean | number
     timeout?: boolean | number
     __typename?: boolean | number

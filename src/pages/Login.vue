@@ -54,11 +54,11 @@ const login = async (username: string, password: string) => {
     const response = await auth.login(username, password)
 
     if (response && response.error) {
-        toast.add({ severity: 'error', detail: 'Λάθος όνομα ή κωδικός', life: 5000 })
+        toast.add({ severity: 'error', summary: 'Σύνδεση', detail: 'Λάθος όνομα ή κωδικός', life: 5000 })
         return
     }
 
-    toast.add({ severity: 'success', detail: 'Συνδεθήκατε με επιτυχία', life: 5000 })
+    toast.add({ severity: 'success', summary: 'Σύνδεση', detail: 'Συνδεθήκατε με επιτυχία', life: 5000 })
     await router.push('/sensors');
 }
 </script>

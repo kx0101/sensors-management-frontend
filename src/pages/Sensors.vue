@@ -23,23 +23,12 @@ const error = ref(null);
 const sensors = computed(() => store.sensors);
 const bell = computed(() => store.bell);
 
-onMounted(() => {
+onMounted(async () => {
     const token = auth.initializeAuth();
     if (!token) {
         router.push('/login');
     }
 });
-
-const initializeStore = async () => {
-    loading.value = true;
-    try {
-        await store.initStore();
-    } catch (err) {
-        error.value = err.message;
-    } finally {
-        loading.value = false;
-    }
-};
 
 const toggleBell = async () => {
     if (!bell.value) {
@@ -62,8 +51,4 @@ const toggleBell = async () => {
         bell.value.status = previousStatus;
     }
 };
-
-onMounted(async () => {
-    await initializeStore();
-});
 </script>

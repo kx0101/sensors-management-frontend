@@ -46,6 +46,39 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         }
     }
 
+    async function updateBellStatus(bell_id: string, status: boolean) {
+        try {
+            await gqlClient.mutation({
+                updateBell: {
+                    __args: {
+                        bellInput: {
+                            _id: bell_id,
+                            status,
+                        }
+                    },
+                    ...everything,
+                }
+            })
+
+            bell.value.status = status;
+            return status;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async function testBell() {
+        try {
+            await fetch('http://localhost:3000/v1/bells/test-bell', {
+                method: 'POST'
+            })
+
+            return "Η σειρήνα βρίσκεται σε δοκιμή..."
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     async function getSensorByAddressAndId(address: string, sensor_id: number) {
         try {
             const response = await gqlClient.query({
@@ -168,24 +201,6 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         }
     }
 
-    async function updateBell(data: IBell) {
-        try {
-            const response = await gqlClient.mutation({
-                updateBell: {
-                    __args: {
-                        bellInput: data,
-                    },
-                    _id: true,
-                    status: true,
-                },
-            });
-
-            return response.updateBell;
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
     function setVisible() {
         visible.value = !visible.value;
     }
@@ -267,7 +282,6 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         updateSensor,
         deleteSensor,
         changeStatus,
-        updateBell,
         setVisible,
         updateAlarm,
         createSensor,
@@ -278,6 +292,8 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         getAlarmsByAknowledged,
         getSensorsByBatch,
         getSensorByAddressAndId,
+        updateBellStatus,
+        testBell,
     };
 },
 )

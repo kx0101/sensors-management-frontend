@@ -98,7 +98,6 @@ input EntryCreate {
 }
 
 type timeoutData {
-  _id: ID!
   sensor_id: String!
   timeout: DateTime
 }

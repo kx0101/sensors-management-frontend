@@ -456,9 +456,6 @@ export default {
             ]
         },
         "timeoutData": {
-            "_id": [
-                5
-            ],
             "sensor_id": [
                 1
             ],

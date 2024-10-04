@@ -16,7 +16,9 @@ const authStore = useAuthStore();
 
 const isLoggedIn = computed(() => authStore.isLoggedIn);
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
     authStore.initializeAuth()
+
+    await sensorsStore.initStore();
 })
 </script>
