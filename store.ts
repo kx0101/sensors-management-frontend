@@ -78,6 +78,23 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         }
     }
 
+    async function getSensorEntriesLast24Hours(sensorInputs) {
+        try {
+            const response = await gqlClient.query({
+                getSensorEntriesLast24Hours: {
+                    __args: {
+                        sensors: sensorInputs,
+                    },
+                    ...everything
+                }
+            });
+
+            return response.getSensorEntriesLast24Hours || [];
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     async function getSensorByAddressAndId(address: string, sensor_id: number) {
         try {
             const response = await gqlClient.query({
@@ -311,6 +328,7 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         getSensorByAddressAndId,
         updateBellStatus,
         testBell,
+        getSensorEntriesLast24Hours,
     };
 },
 )

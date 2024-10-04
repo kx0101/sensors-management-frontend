@@ -14,6 +14,9 @@ importers:
       '@vueuse/core':
         specifier: ^11.1.0
         version: 11.1.0(vue@3.5.8(typescript@5.6.2))
+      chart.js:
+        specifier: ^4.4.4
+        version: 4.4.4
       graphql:
         specifier: ^16.9.0
         version: 16.9.0
@@ -47,6 +50,9 @@ importers:
       vue:
         specifier: ^3.4.37
         version: 3.5.8(typescript@5.6.2)
+      vue-chartjs:
+        specifier: ^5.3.1
+        version: 5.3.1(chart.js@4.4.4)(vue@3.5.8(typescript@5.6.2))
       vue-router:
         specifier: ^4.4.5
         version: 4.4.5(vue@3.5.8(typescript@5.6.2))
@@ -275,6 +281,9 @@ packages:
 
   '@jridgewell/sourcemap-codec@1.5.0':
     resolution: {integrity: sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==}
+
+  '@kurkle/color@0.3.2':
+    resolution: {integrity: sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==}
 
   '@molt/command@0.9.0':
     resolution: {integrity: sha512-1JI8dAlpqlZoXyKWVQggX7geFNPxBpocHIXQCsnxDjKy+3WX4SGyZVJXuLlqRRrX7FmQCuuMAfx642ovXmPA9g==}
@@ -527,6 +536,10 @@ packages:
   chalk@5.3.0:
     resolution: {integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+
+  chart.js@4.4.4:
+    resolution: {integrity: sha512-emICKGBABnxhMjUjlYRR12PmOXhJ2eJjEHL2/dZlWjxRAZT1D8xplLFq5M0tMQK8ja+wBS/tuVEJB5C6r7VxJA==}
+    engines: {pnpm: '>=8'}
 
   cli-cursor@4.0.0:
     resolution: {integrity: sha512-VGtlMu3x/4DOtIUwEkRezxUZ2lBacNJCHash0N0WeZDBS+7Ux1dm3XWAgWYxLJFMMdOeXMHXorshEFhbMSGelg==}
@@ -1086,6 +1099,12 @@ packages:
   vscode-uri@3.0.8:
     resolution: {integrity: sha512-AyFQ0EVmsOZOlAnxoFOGOq1SQDWAB7C6aqMGS23svWAllfOaxbuFvcT8D1i8z3Gyn8fraVeZNNmN6e9bxxXkKw==}
 
+  vue-chartjs@5.3.1:
+    resolution: {integrity: sha512-rZjqcHBxKiHrBl0CIvcOlVEBwRhpWAVf6rDU3vUfa7HuSRmGtCslc0Oc8m16oAVuk0erzc1FCtH1VCriHsrz+A==}
+    peerDependencies:
+      chart.js: ^4.1.1
+      vue: ^3.0.0-0 || ^2.7.0
+
   vue-demi@0.14.10:
     resolution: {integrity: sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==}
     engines: {node: '>=12'}
@@ -1303,6 +1322,8 @@ snapshots:
       graphql: 16.9.0
 
   '@jridgewell/sourcemap-codec@1.5.0': {}
+
+  '@kurkle/color@0.3.2': {}
 
   '@molt/command@0.9.0':
     dependencies:
@@ -1572,6 +1593,10 @@ snapshots:
   camelcase@5.3.1: {}
 
   chalk@5.3.0: {}
+
+  chart.js@4.4.4:
+    dependencies:
+      '@kurkle/color': 0.3.2
 
   cli-cursor@4.0.0:
     dependencies:
@@ -2074,6 +2099,11 @@ snapshots:
       fsevents: 2.3.3
 
   vscode-uri@3.0.8: {}
+
+  vue-chartjs@5.3.1(chart.js@4.4.4)(vue@3.5.8(typescript@5.6.2)):
+    dependencies:
+      chart.js: 4.4.4
+      vue: 3.5.8(typescript@5.6.2)
 
   vue-demi@0.14.10(vue@3.5.8(typescript@5.6.2)):
     dependencies:

@@ -29,6 +29,7 @@ import Checkbox from 'primevue/checkbox';
 import DataTable from 'primevue/datatable';
 import Tag from 'primevue/tag';
 import Column from 'primevue/column';
+import Chart from 'primevue/chart';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -79,5 +80,6 @@ app.component('Checkbox', Checkbox);
 app.component('DataTable', DataTable);
 app.component('Tag', Tag);
 app.component('Column', Column);
+app.component('Chart', Chart);
 
 app.mount('#app');

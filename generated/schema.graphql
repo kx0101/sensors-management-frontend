@@ -11,6 +11,7 @@ type Query {
   getSensorsByBuilding(building: String!): [Sensor]
   getSensorUniqueBuildings: [String]
   getSensorsByBatch(inputs: [SensorBatchInput!]!): [Sensor!]!
+  getSensorEntriesLast24Hours(sensors: [SensorBatchInput!]!): [AverageEntry]
   users: [User]
   user(user: UserInput!): User
   userByUsername(username: String!): User
@@ -100,6 +101,12 @@ input EntryCreate {
 type timeoutData {
   sensor_id: String!
   timeout: DateTime
+}
+
+type AverageEntry {
+  sensorId: Int!
+  averages: [Float!]!
+  address: String!
 }
 
 type Sensor {

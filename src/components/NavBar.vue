@@ -130,7 +130,7 @@ const menuModel = ref([
     {
         label: 'Στατιστικά',
         icon: 'pi pi-chart-line',
-        command: () => navigate('/sensorstats'),
+        command: () => navigate('/stats'),
     },
     {
         label: 'Συναγερμοί',

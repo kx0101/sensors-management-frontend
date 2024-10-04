@@ -91,6 +91,7 @@ export interface Query {
     getSensorsByBuilding: ((Sensor | null)[] | null)
     getSensorUniqueBuildings: ((Scalars['String'] | null)[] | null)
     getSensorsByBatch: Sensor[]
+    getSensorEntriesLast24Hours: ((AverageEntry | null)[] | null)
     users: ((User | null)[] | null)
     user: (User | null)
     userByUsername: (User | null)
@@ -152,6 +153,13 @@ export interface timeoutData {
     __typename: 'timeoutData'
 }
 
+export interface AverageEntry {
+    sensorId: Scalars['Int']
+    averages: Scalars['Float'][]
+    address: Scalars['String']
+    __typename: 'AverageEntry'
+}
+
 export interface Sensor {
     _id: Scalars['ID']
     name: Scalars['String']
@@ -188,6 +196,7 @@ export interface QueryGenqlSelection{
     getSensorsByBuilding?: (SensorGenqlSelection & { __args: {building: Scalars['String']} })
     getSensorUniqueBuildings?: boolean | number
     getSensorsByBatch?: (SensorGenqlSelection & { __args: {inputs: SensorBatchInput[]} })
+    getSensorEntriesLast24Hours?: (AverageEntryGenqlSelection & { __args: {sensors: SensorBatchInput[]} })
     users?: UserGenqlSelection
     user?: (UserGenqlSelection & { __args: {user: UserInput} })
     userByUsername?: (UserGenqlSelection & { __args: {username: Scalars['String']} })
@@ -266,6 +275,14 @@ export interface EntryCreate {address: Scalars['String'],sensor: Scalars['Int'],
 export interface timeoutDataGenqlSelection{
     sensor_id?: boolean | number
     timeout?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface AverageEntryGenqlSelection{
+    sensorId?: boolean | number
+    averages?: boolean | number
+    address?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -356,6 +373,14 @@ export interface UserInput {id: Scalars['String']}
     export const istimeoutData = (obj?: { __typename?: any } | null): obj is timeoutData => {
       if (!obj?.__typename) throw new Error('__typename is missing in "istimeoutData"')
       return timeoutData_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const AverageEntry_possibleTypes: string[] = ['AverageEntry']
+    export const isAverageEntry = (obj?: { __typename?: any } | null): obj is AverageEntry => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isAverageEntry"')
+      return AverageEntry_possibleTypes.includes(obj.__typename)
     }
     
 

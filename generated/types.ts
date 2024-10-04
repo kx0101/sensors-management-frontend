@@ -5,7 +5,6 @@ export default {
         3,
         5,
         15,
-        25,
         26,
         27,
         28,
@@ -71,7 +70,8 @@ export default {
         88,
         89,
         90,
-        91
+        91,
+        92
     ],
     "types": {
         "Query": {
@@ -129,10 +129,10 @@ export default {
                 }
             ],
             "sensors": [
-                19
+                20
             ],
             "sensor": [
-                19,
+                20,
                 {
                     "location": [
                         2,
@@ -141,7 +141,7 @@ export default {
                 }
             ],
             "getSensorByAddressAndId": [
-                19,
+                20,
                 {
                     "address": [
                         2,
@@ -154,7 +154,7 @@ export default {
                 }
             ],
             "getSensorsByBuilding": [
-                19,
+                20,
                 {
                     "building": [
                         2,
@@ -166,28 +166,37 @@ export default {
                 2
             ],
             "getSensorsByBatch": [
-                19,
+                20,
                 {
                     "inputs": [
-                        22,
+                        23,
+                        "[SensorBatchInput!]!"
+                    ]
+                }
+            ],
+            "getSensorEntriesLast24Hours": [
+                19,
+                {
+                    "sensors": [
+                        23,
                         "[SensorBatchInput!]!"
                     ]
                 }
             ],
             "users": [
-                23
+                24
             ],
             "user": [
-                23,
+                24,
                 {
                     "user": [
-                        24,
+                        25,
                         "UserInput!"
                     ]
                 }
             ],
             "userByUsername": [
-                23,
+                24,
                 {
                     "username": [
                         2,
@@ -258,25 +267,25 @@ export default {
                 }
             ],
             "createSensor": [
-                19,
+                20,
                 {
                     "sensorInput": [
-                        20,
+                        21,
                         "SensorCreate!"
                     ]
                 }
             ],
             "updateSensor": [
-                19,
+                20,
                 {
                     "sensorInput": [
-                        21,
+                        22,
                         "SensorUpdate!"
                     ]
                 }
             ],
             "deleteSensor": [
-                19,
+                20,
                 {
                     "_id": [
                         5,
@@ -285,7 +294,7 @@ export default {
                 }
             ],
             "updateStatusSensor": [
-                19,
+                20,
                 {
                     "_id": [
                         5,
@@ -319,10 +328,10 @@ export default {
                 3
             ],
             "createdAt": [
-                27
+                28
             ],
             "updatedAt": [
-                27
+                28
             ],
             "__typename": [
                 2
@@ -422,13 +431,13 @@ export default {
                 15
             ],
             "expireAt": [
-                27
+                28
             ],
             "createdAt": [
-                27
+                28
             ],
             "updatedAt": [
-                27
+                28
             ],
             "__typename": [
                 2
@@ -468,7 +477,21 @@ export default {
                 2
             ],
             "timeout": [
-                27
+                28
+            ],
+            "__typename": [
+                2
+            ]
+        },
+        "AverageEntry": {
+            "sensorId": [
+                1
+            ],
+            "averages": [
+                15
+            ],
+            "address": [
+                2
             ],
             "__typename": [
                 2
