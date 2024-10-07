@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "vite",
-    "build": "vue-tsc -b && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "genql": "genql --endpoint http://localhost:3000/graphql --output ./generated",
     "dev": "rm -rf generated && pnpm run genql && pnpm run start"
