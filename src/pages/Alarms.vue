@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { useSensorsDataStore } from '../../store';
+import { useSensorsDataStore } from '../../store/sensorsDataStore';
 import { IAlarm } from '../../types';
 
 const store = useSensorsDataStore();

@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { Chart as ChartJS, registerables } from 'chart.js';
 import { computed, onMounted, ref, watch } from "vue";
-import { useSensorsDataStore } from '../../store';
+import { useSensorsDataStore } from '../../store/sensorsDataStore';
 import { ISensor } from '../../types';
 
 ChartJS.register(...registerables);

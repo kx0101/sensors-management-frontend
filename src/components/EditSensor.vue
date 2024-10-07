@@ -74,7 +74,7 @@ import type { GraphQLError } from 'graphql';
 import { useToast } from 'primevue/usetoast';
 import type { ISensor } from '../../types';
 import { computed, ref } from 'vue';
-import { useSensorsDataStore } from '../../store';
+import { useSensorsDataStore } from '../../store/sensorsDataStore';
 
 const visible = ref(false);
 const toast = useToast();

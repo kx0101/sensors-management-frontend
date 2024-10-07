@@ -65,7 +65,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed, watch, onBeforeUnmount } from 'vue';
-import { useSensorsDataStore } from '../../store';
+import { useSensorsDataStore } from '../../store/sensorsDataStore';
 import { wsManager, entryCreatedQuery, alarmCreatedQuery, timeoutCreatedQuery } from '../../wsManager';
 import type { IAlarm, IEntry, ISensor } from '../../types';
 import SensorView from '../components/SensorView.vue';
@@ -75,7 +75,7 @@ import { useAuthStore } from '../../usersStore';
 const auth = useAuthStore()
 const store = useSensorsDataStore();
 
-const uniqueBuildings = computed(() => store.getUniqueBuildings);
+const uniqueBuildings = computed(() => store.uniqueBuildings);
 
 const sensorsByBuilding = ref({});
 const currentEntry = ref<IEntry | null>(null);

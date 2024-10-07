@@ -11,7 +11,7 @@
 import SensorConfig from '../components/SensorConfig.vue';
 import CreateSensor from '../components/CreateSensor.vue';
 import { computed, onMounted, ref } from 'vue';
-import { useSensorsDataStore } from '../../store';
+import { useSensorsDataStore } from '../../store/sensorsDataStore'
 import { useAuthStore } from '../../usersStore';
 import { router } from '../AppRoutes';
 
@@ -45,7 +45,7 @@ const toggleBell = async () => {
     };
 
     try {
-        await store.updateBell(updatedBell);
+        await store.updateBellStatus(updatedBell._id, updatedBell.status);
     } catch (err) {
         console.error("Failed to update bell, reverting to previous status", err);
         bell.value.status = previousStatus;

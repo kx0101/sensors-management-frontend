@@ -38,7 +38,7 @@ import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 import { useAuthStore } from '../../usersStore';
 import { router } from '../Approutes';
-import { useSensorsDataStore } from '../../store';
+import { useSensorsDataStore } from '../../store/sensorsDataStore';
 
 const auth = useAuthStore();
 const store = useSensorsDataStore();

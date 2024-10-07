@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import NavBar from './components/NavBar.vue';
 import { computed, onMounted, onBeforeMount } from 'vue';
-import { useSensorsDataStore } from '../store';
+import { useSensorsDataStore } from '../store/sensorsDataStore';
 import { useAuthStore } from '../usersStore';
 
 const sensorsStore = useSensorsDataStore();

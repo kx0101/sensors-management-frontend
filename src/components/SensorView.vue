@@ -72,7 +72,7 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { defineProps } from 'vue';
 import type { IEntry, ISensor } from '../../types';
 import Button from 'primevue/button';
-import { useSensorsDataStore } from '../../store';
+import { useSensorsDataStore } from '../../store/sensorsDataStore';
 
 const props = defineProps<{
     sensor: ISensor;

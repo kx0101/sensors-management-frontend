@@ -68,7 +68,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useSensorsDataStore } from '../../store';
+import { useSensorsDataStore } from '../../store/sensorsDataStore';
 import type { GraphQLError } from 'graphql';
 
 const visibleCard = ref(false);

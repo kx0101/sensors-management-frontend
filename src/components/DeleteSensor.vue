@@ -20,7 +20,7 @@
 <script setup>
 import { useConfirmDialog } from '@vueuse/core'
 import { useToast } from 'primevue/usetoast';
-import { useSensorsDataStore } from '../../store';
+import { useSensorsDataStore } from '../../store/sensorsDataStore';
 
 const { isRevealed, reveal, cancel } = useConfirmDialog();
 const toast = useToast();
