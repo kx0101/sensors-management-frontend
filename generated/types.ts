@@ -128,6 +128,19 @@ export default {
                     ]
                 }
             ],
+            "entry": [
+                14,
+                {
+                    "sensorAddress": [
+                        2,
+                        "String!"
+                    ],
+                    "sensorId": [
+                        1,
+                        "Int!"
+                    ]
+                }
+            ],
             "sensors": [
                 20
             ],

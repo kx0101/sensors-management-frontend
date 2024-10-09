@@ -13,7 +13,7 @@ import CreateSensor from '../components/CreateSensor.vue';
 import { computed, onMounted, ref } from 'vue';
 import { useSensorsDataStore } from '../../store/sensorsDataStore'
 import { useAuthStore } from '../../usersStore';
-import { router } from '../AppRoutes';
+import { router } from '../Approutes';
 
 const store = useSensorsDataStore();
 const auth = useAuthStore();

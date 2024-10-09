@@ -88,6 +88,19 @@ const response = ref<boolean>(false);
 const warning = ref<boolean>(props.timeout);
 const alarm = ref<boolean>(false);
 
+onMounted(async () => {
+    try {
+        const result = await store.getEntry(props.sensor.address, props.sensor.sensor_id);
+
+        if (result) {
+            localEntryValue.value = result.value;
+            visible.value = true
+        }
+    } catch (err) {
+        console.log(err);
+    }
+})
+
 watch(() => props.timeout, (newTimeout) => {
     warning.value = newTimeout;
 })

@@ -5,6 +5,7 @@ type Query {
   getAlarmsByAknowledged(aknowledged: Boolean): [Alarm]
   bell: Bell
   entries(sensor: EntryID!): [Entry]
+  entry(sensorAddress: String!, sensorId: Int!): Entry
   sensors: [Sensor]
   sensor(location: String!): Sensor
   getSensorByAddressAndId(address: String!, sensor_id: Int!): Sensor

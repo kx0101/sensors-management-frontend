@@ -41,7 +41,7 @@ export async function updateBellStatus(bell_id: string, status: boolean) {
 
 export async function testBell() {
     try {
-        await fetch('http://localhost:3000/v1/bells/test-bell', { method: 'POST' });
+        await fetch(`http://${import.meta.env.VITE_SERVER_URL}/v1/bells/test-bell`, { method: 'POST' });
 
         return 'Η σειρήνα βρίσκεται σε δοκιμή...';
     } catch (err) {

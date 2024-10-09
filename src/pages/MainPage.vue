@@ -162,7 +162,10 @@ async function fetchAlarms() {
 
 watch(uniqueBuildings, async (newUniqueBuildings) => {
     for (const building of newUniqueBuildings) {
-        selectedBuildings.value.push(building);
+        if (!selectedBuildings.value.includes(building)) {
+            selectedBuildings.value.push(building);
+        }
+
         const sensors = await store.getSensorsByBuilding(building);
 
         if (sensors.length > 0) {

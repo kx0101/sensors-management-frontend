@@ -1,5 +1,5 @@
 <template>
-    <Button @click="reveal" label="Delete" severity="danger"></Button>
+    <Button v-if="auth.isAdmin()" @click="reveal" label="Delete" severity="danger"></Button>
 
     <teleport to="body">
         <div v-if="isRevealed" class="modal-bg">
@@ -21,11 +21,14 @@
 import { useConfirmDialog } from '@vueuse/core'
 import { useToast } from 'primevue/usetoast';
 import { useSensorsDataStore } from '../../store/sensorsDataStore';
+import { useAuthStore } from '../../usersStore';
+import { onMounted } from 'vue';
 
 const { isRevealed, reveal, cancel } = useConfirmDialog();
 const toast = useToast();
 const props = defineProps({ id: { type: String, required: true } });
 const store = useSensorsDataStore();
+const auth = useAuthStore();
 
 const handleConfirm = () => {
     store.deleteSensor(props.id);

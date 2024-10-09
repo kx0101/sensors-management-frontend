@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import { createPinia } from 'pinia';
-import { router } from './AppRoutes'
+import { router } from './Approutes'
 import ToastService from 'primevue/toastservice';
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';

@@ -6,7 +6,7 @@ class WebSocketManager {
 
     constructor() {
         this.wsClient = createWsClient({
-            url: 'ws://localhost:3000/graphql',
+            url: `ws://${import.meta.env.VITE_SERVER_URL}/graphql`,
         });
     }
 

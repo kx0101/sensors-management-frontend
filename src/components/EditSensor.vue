@@ -6,42 +6,50 @@
 
             <div class="flex align-items-center gap-3 mb-2">
                 <label for="name" class="font-semibold w-6rem">Name</label>
-                <InputText id="name" v-model="sensor.name" class="flex-auto" autocomplete="off" />
+                <InputText :disabled="!auth.isAdmin()" id="name" v-model="sensor.name" class="flex-auto"
+                    autocomplete="off" />
             </div>
 
             <div class="flex align-items-center gap-3 mb-2">
                 <label for="description" class="font-semibold w-6rem">Description</label>
-                <InputText id="description" v-model="sensor.description" class="flex-auto" autocomplete="off" />
+                <InputText :disabled="!auth.isAdmin()" id="description" v-model="sensor.description" class="flex-auto"
+                    autocomplete="off" />
             </div>
 
             <div class="flex align-items-center gap-3 mb-2">
                 <label for="address" class="font-semibold w-6rem">Address</label>
-                <InputText id="address" v-model="sensor.address" class="flex-auto" autocomplete="off" />
+                <InputText :disabled="!auth.isAdmin()" id="address" v-model="sensor.address" class="flex-auto"
+                    autocomplete="off" />
             </div>
 
             <div class="flex align-items-center gap-3 mb-2">
                 <label for="location" class="font-semibold w-6rem">Location</label>
-                <InputText id="location" v-model="sensor.location" class="flex-auto" autocomplete="off" />
+                <InputText :disabled="!auth.isAdmin()" id="location" v-model="sensor.location" class="flex-auto"
+                    autocomplete="off" />
             </div>
 
             <div class="flex align-items-center gap-3 mb-2">
                 <label for="type" class="font-semibold w-6rem">Type</label>
-                <InputText id="type" v-model="sensor.type" class="flex-auto" autocomplete="off" />
+                <InputText :disabled="!auth.isAdmin()" id="type" v-model="sensor.type" class="flex-auto"
+                    autocomplete="off" />
             </div>
 
             <div class="flex align-items-center gap-3 mb-2">
                 <label for="sensor_id" class="font-semibold w-6rem">Sensor ID</label>
-                <InputNumber id="sensor_id" v-model="sensor.sensor_id" class="flex-auto" autocomplete="off" />
+                <InputNumber :disabled="!auth.isAdmin()" id="sensor_id" v-model="sensor.sensor_id" class="flex-auto"
+                    autocomplete="off" />
             </div>
 
             <div class="flex align-items-center gap-3 mb-2">
                 <label for="unit" class="font-semibold w-6rem">Unit</label>
-                <InputText id="unit" v-model="sensor.unit" class="flex-auto" autocomplete="off" />
+                <InputText :disabled="!auth.isAdmin()" id="unit" v-model="sensor.unit" class="flex-auto"
+                    autocomplete="off" />
             </div>
 
             <div class="flex align-items-center gap-3 mb-2">
                 <label for="building" class="font-semibold w-6rem">Building</label>
-                <InputText id="building" v-model="sensor.building" class="flex-auto" autocomplete="off" />
+                <InputText :disabled="!auth.isAdmin()" id="building" v-model="sensor.building" class="flex-auto"
+                    autocomplete="off" />
             </div>
 
             <div class="flex align-items-center gap-3 mb-2">
@@ -75,12 +83,14 @@ import { useToast } from 'primevue/usetoast';
 import type { ISensor } from '../../types';
 import { computed, ref } from 'vue';
 import { useSensorsDataStore } from '../../store/sensorsDataStore';
+import { useAuthStore } from '../../usersStore';
 
 const visible = ref(false);
 const toast = useToast();
+const auth = useAuthStore();
+const store = useSensorsDataStore();
 
 const props = defineProps({ id: { type: String, required: true } })
-const store = useSensorsDataStore();
 const sensors = computed(() => store.sensors);
 const sensor = ref({} as ISensor);
 

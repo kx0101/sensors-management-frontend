@@ -14,6 +14,7 @@ import {
 } from './actions/sensors';
 import { bell, fetchBell, updateBellStatus, testBell, getBell } from './actions/bell';
 import { getAlarms, updateAlarm, getAlarmsByAknowledged, alarms } from './actions/alarms';
+import { getEntry } from './actions/entries';
 
 export const useSensorsDataStore = defineStore('sensorsdata', () => {
     async function initStore() {
@@ -38,6 +39,7 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         getAlarms,
         getAlarmsByAknowledged,
         deleteSensor,
+        getEntry,
         getSensorUniqueBuildings,
         getSensorsByBatch,
         getSensorByAddressAndId,

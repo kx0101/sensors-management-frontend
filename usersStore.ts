@@ -1,7 +1,14 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import Cookies from 'js-cookie';
-import { router } from './src/AppRoutes'
+import { router } from './src/Approutes'
+import { jwtDecode } from 'jwt-decode';
+
+interface DecodedToken {
+    username: string;
+    role: string;
+    exp: number;
+}
 
 export const useAuthStore = defineStore('auth', () => {
     const token = ref<string | null>(null);
@@ -12,7 +19,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     async function login(usernameInput: string, password: string) {
         try {
-            const response = await fetch('http://localhost:3000/v1/users/login', {
+            const response = await fetch(`http://${import.meta.env.VITE_SERVER_URL}/v1/users/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -23,13 +30,15 @@ export const useAuthStore = defineStore('auth', () => {
             const data = await response.json();
 
             if (response.ok) {
+                const decodedToken = jwtDecode<DecodedToken>(data.token);
+
                 token.value = data.token;
-                username.value = data.username;
-                role.value = data.role;
+                username.value = decodedToken.username;
+                role.value = decodedToken.role;
                 isLoggedIn.value = true;
                 error.value = null;
 
-                Cookies.set('authToken', data.token, { sameSite: 'None', secure: true });
+                Cookies.set('authToken', data.token, { secure: true });
             } else {
                 error.value = data.message || 'Login failed';
                 return { error: error.value }
@@ -56,11 +65,30 @@ export const useAuthStore = defineStore('auth', () => {
         const savedToken = Cookies.get('authToken');
 
         if (savedToken) {
-            token.value = savedToken;
-            isLoggedIn.value = true;
+            try {
+                const decodedToken = jwtDecode<DecodedToken>(savedToken);
+                const isTokenExpired = decodedToken.exp * 1000 < Date.now();
+
+                if (isTokenExpired) {
+                    logout();
+                    return;
+                }
+
+                token.value = savedToken;
+                username.value = decodedToken.username;
+                role.value = decodedToken.role;
+                isLoggedIn.value = true;
+            } catch (error) {
+                console.error('Invalid token:', error);
+                logout();
+            }
         }
 
         return !!savedToken
+    }
+
+    function isAdmin() {
+        return role.value === "admin";
     }
 
     return {
@@ -72,5 +100,6 @@ export const useAuthStore = defineStore('auth', () => {
         login,
         logout,
         initializeAuth,
+        isAdmin,
     };
 });

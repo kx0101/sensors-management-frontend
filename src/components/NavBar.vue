@@ -7,11 +7,11 @@
             </span>
         </template>
         <template #end>
-            <Button v-if="status" @click="showConfirmationDialog" label="Απενεργοποίηση Σειρήνας" icon="pi pi-lock"
+            <Button v-if="status && auth.isAdmin()" @click="showConfirmationDialog" label="Απενεργοποίηση Σειρήνας" icon="pi pi-lock"
                 class="disable-button" severity="success" />
-            <Button v-else-if="!status" @click="handleEnableButton" label="Ενεργοποίηση Σειρήνας" icon="pi pi-lock-open"
+            <Button v-else-if="!status && auth.isAdmin()" @click="handleEnableButton" label="Ενεργοποίηση Σειρήνας" icon="pi pi-lock-open"
                 class="enable-button" severity="success" />
-            <Button @click="handleTestButton" label="Δοκιμή Σειρήνας" icon="pi pi-bell" class="test-button"
+            <Button v-if="auth.isAdmin()" @click="handleTestButton" label="Δοκιμή Σειρήνας" icon="pi pi-bell" class="test-button"
                 severity="info" />
             <Button @click="handleLogoutButton" label="Εξοδος" icon="pi pi-sign-out" class="logout-button"
                 severity="danger" />

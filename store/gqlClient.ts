@@ -1,7 +1,7 @@
 import { createClient, everything } from '../generated/index.js';
 
 export const gqlClient = createClient({
-    url: 'http://localhost:3000/graphql',
+    url: `http://${import.meta.env.VITE_SERVER_URL}/graphql`,
 });
 
 export { everything };

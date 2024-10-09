@@ -85,6 +85,7 @@ export interface Query {
     getAlarmsByAknowledged: ((Alarm | null)[] | null)
     bell: (Bell | null)
     entries: ((Entry | null)[] | null)
+    entry: (Entry | null)
     sensors: ((Sensor | null)[] | null)
     sensor: (Sensor | null)
     getSensorByAddressAndId: (Sensor | null)
@@ -190,6 +191,7 @@ export interface QueryGenqlSelection{
     getAlarmsByAknowledged?: (AlarmGenqlSelection & { __args?: {aknowledged?: (Scalars['Boolean'] | null)} })
     bell?: BellGenqlSelection
     entries?: (EntryGenqlSelection & { __args: {sensor: EntryID} })
+    entry?: (EntryGenqlSelection & { __args: {sensorAddress: Scalars['String'], sensorId: Scalars['Int']} })
     sensors?: SensorGenqlSelection
     sensor?: (SensorGenqlSelection & { __args: {location: Scalars['String']} })
     getSensorByAddressAndId?: (SensorGenqlSelection & { __args: {address: Scalars['String'], sensor_id: Scalars['Int']} })
