@@ -21,6 +21,7 @@ ChartJS.register(...registerables);
 
 const store = useSensorsDataStore();
 const sensors = computed(() => store.sensors);
+const loading = computed(() => store.loading);
 
 const results = ref<{ sensorId: number; address: string; averagePerHour: number[] }[]>([]);
 
@@ -80,8 +81,8 @@ const chartOptions = (sensor: ISensor) => {
     };
 };
 
-watch(sensors, async (sensors) => {
-    const sensorInputs = sensors.map(sensor => ({
+async function fetchSensorEntries() {
+    const sensorInputs = sensors.value.map(sensor => ({
         address: sensor.address,
         sensor_id: sensor.sensor_id,
     }));
@@ -89,9 +90,11 @@ watch(sensors, async (sensors) => {
     try {
         const averages = await store.getSensorEntriesLast24Hours(sensorInputs);
 
+        results.value = [];
+
         averages.forEach(({ sensorId, averages, address }) => {
             results.value.push({
-                sensorId: sensorId,
+                sensorId,
                 averagePerHour: averages,
                 address,
             });
@@ -99,7 +102,19 @@ watch(sensors, async (sensors) => {
     } catch (error) {
         console.error("Error fetching data for sensors:", error);
     }
-});
+}
+
+onMounted(async () => {
+    if (!loading.value) {
+        await fetchSensorEntries();
+    }
+})
+
+watch(loading, async (newLoading) => {
+    if (!newLoading) {
+        await fetchSensorEntries();
+    }
+}, { deep: true, immediate: true });
 
 </script>
 

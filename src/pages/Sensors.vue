@@ -3,7 +3,7 @@
         <div v-for="sensor in sensors" :key="sensor._id">
             <SensorConfig :sensor="sensor" class="flex align-items-left justify-content-center" />
         </div>
-        <CreateSensor />
+        <CreateSensor v-if="auth.isAdmin()" />
     </div>
 </template>
 

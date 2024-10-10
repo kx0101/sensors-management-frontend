@@ -4,6 +4,7 @@ import { ref, computed } from 'vue';
 
 export const sensors = ref<ISensor[]>([]);
 export const uniqueBuildings = ref<string[]>([]);
+export const loading = ref<boolean>(true);
 
 export const getSensor = computed(() => (id: string) => sensors.value.find(sensor => sensor._id === id));
 export const getSensors = computed(() => sensors.value);
@@ -20,6 +21,8 @@ export async function fetchSensors() {
     } catch (err) {
         console.error(err);
     }
+
+    loading.value = false;
 }
 
 export async function getSensorsByBuilding(building: string) {

@@ -10,7 +10,8 @@ import {
     getSensors,
     getSensorsByBuilding,
     getSensorUniqueBuildings,
-    uniqueBuildings
+    uniqueBuildings,
+    loading,
 } from './actions/sensors';
 import { bell, fetchBell, updateBellStatus, testBell, getBell } from './actions/bell';
 import { getAlarms, updateAlarm, getAlarmsByAknowledged, alarms } from './actions/alarms';
@@ -44,5 +45,6 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         getSensorsByBatch,
         getSensorByAddressAndId,
         getSensorEntriesLast24Hours,
+        loading,
     };
 });

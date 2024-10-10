@@ -91,6 +91,10 @@ export const useAuthStore = defineStore('auth', () => {
         return role.value === "admin";
     }
 
+    function isFacilityManager() {
+        return role.value === "manager";
+    }
+
     return {
         token,
         username,
@@ -101,5 +105,6 @@ export const useAuthStore = defineStore('auth', () => {
         logout,
         initializeAuth,
         isAdmin,
+        isFacilityManager,
     };
 });
