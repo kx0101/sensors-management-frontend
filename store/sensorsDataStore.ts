@@ -4,6 +4,7 @@ import {
     getSensorByAddressAndId,
     getSensorEntriesLast24Hours,
     sensors,
+    updateSensor,
     deleteSensor,
     fetchSensors,
     getSensor,
@@ -46,5 +47,6 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         getSensorByAddressAndId,
         getSensorEntriesLast24Hours,
         loading,
+        updateSensor,
     };
 });
