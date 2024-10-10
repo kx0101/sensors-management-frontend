@@ -38,7 +38,7 @@ export const useAuthStore = defineStore('auth', () => {
                 isLoggedIn.value = true;
                 error.value = null;
 
-                Cookies.set('authToken', data.token, { secure: true });
+                Cookies.set('authToken', data.token);
             } else {
                 error.value = data.message || 'Login failed';
                 return { error: error.value }
