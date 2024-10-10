@@ -86,7 +86,19 @@ const localEntryValue = ref<number | null>(null);
 const visible = ref<boolean>(false);
 const response = ref<boolean>(false);
 const warning = ref<boolean>(props.timeout);
-const alarm = ref<boolean>(false);
+const alarm = ref<boolean>(isAlarmOn());
+
+watch(visible, () => {
+    alarm.value = isAlarmOn();
+})
+
+function isAlarmOn() {
+    if (!localEntryValue.value) {
+        return false;
+    }
+
+    return localEntryValue.value >= props.sensor.up_limit || localEntryValue.value <= props.sensor.down_limit
+}
 
 onMounted(async () => {
     try {

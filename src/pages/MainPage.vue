@@ -208,6 +208,8 @@ async function handleNewAlarm(newAlarm: IAlarm) {
     };
 
     dialogs.value.push(newDialog);
+
+    await store.fetchSensors();
 }
 
 async function handleNewTimeout(timeout: { sensor_id: string, timeout: Date }) {

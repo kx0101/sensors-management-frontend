@@ -48,5 +48,6 @@ export const useSensorsDataStore = defineStore('sensorsdata', () => {
         getSensorEntriesLast24Hours,
         loading,
         updateSensor,
+        fetchSensors,
     };
 });
